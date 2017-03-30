@@ -1,0 +1,9 @@
+F:\Balda\Balda\bin\Debug\Balda.exe
+F:\Balda\Balda\bin\Debug\Balda.pdb
+F:\Balda\Balda\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\Balda\Balda\obj\x86\Debug\Balda.Form1.resources
+F:\Balda\Balda\obj\x86\Debug\Balda.Properties.Resources.resources
+F:\Balda\Balda\obj\x86\Debug\GenerateResource.read.1.tlog
+F:\Balda\Balda\obj\x86\Debug\GenerateResource.write.1.tlog
+F:\Balda\Balda\obj\x86\Debug\Balda.exe
+F:\Balda\Balda\obj\x86\Debug\Balda.pdb
