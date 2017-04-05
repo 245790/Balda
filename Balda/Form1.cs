@@ -26,7 +26,7 @@ namespace Balda
         private void Form1_Load(object sender, EventArgs e)
         {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("users.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+            Stream stream = new FileStream("../../users.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
             users = (Dictionary<string, int>)formatter.Deserialize(stream);
             stream.Close();
         }
@@ -34,7 +34,7 @@ namespace Balda
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream("users.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            Stream stream = new FileStream("../../users.bin", FileMode.Create, FileAccess.Write, FileShare.None);
             formatter.Serialize(stream, users);
             stream.Close();  
         }
