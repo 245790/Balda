@@ -6,14 +6,37 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.Serialization;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Balda
 {
     public partial class Form1 : Form
     {
+        private Dictionary<string, int> users; // NAME -> RATING
+
+        private int defaultRating = 1600;
+
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream("users.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+            users = (Dictionary<string, int>)formatter.Deserialize(stream);
+            stream.Close();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream("users.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            formatter.Serialize(stream, users);
+            stream.Close();  
         }
     }
 }

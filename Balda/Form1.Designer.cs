@@ -36,7 +36,7 @@
             // createGameButton
             // 
             this.createGameButton.Location = new System.Drawing.Point(168, 94);
-            this.createGameButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.createGameButton.Margin = new System.Windows.Forms.Padding(6);
             this.createGameButton.Name = "createGameButton";
             this.createGameButton.Size = new System.Drawing.Size(264, 42);
             this.createGameButton.TabIndex = 0;
@@ -46,7 +46,7 @@
             // recordsButton
             // 
             this.recordsButton.Location = new System.Drawing.Point(168, 148);
-            this.recordsButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.recordsButton.Margin = new System.Windows.Forms.Padding(6);
             this.recordsButton.Name = "recordsButton";
             this.recordsButton.Size = new System.Drawing.Size(264, 42);
             this.recordsButton.TabIndex = 1;
@@ -56,7 +56,7 @@
             // exitButton
             // 
             this.exitButton.Location = new System.Drawing.Point(168, 202);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(6);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(264, 42);
             this.exitButton.TabIndex = 2;
@@ -74,11 +74,13 @@
             this.Controls.Add(this.createGameButton);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Компьютерная игра \"Балда\"";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
