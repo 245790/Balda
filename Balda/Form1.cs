@@ -38,5 +38,17 @@ namespace Balda
             formatter.Serialize(stream, users);
             stream.Close();  
         }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Вы уверены в том, что хотите выйти?",
+                                         "Подтверждение выхода",
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
     }
 }
