@@ -16,8 +16,6 @@ namespace Balda
     {
         private Dictionary<string, int> users; // NAME -> RATING
 
-        private int defaultRating = 1600;
-
         public Form1()
         {
             InitializeComponent();
@@ -53,7 +51,7 @@ namespace Balda
 
         private void createGameButton_Click(object sender, EventArgs e)
         {
-            GameCreationForm g = new GameCreationForm();
+            GameCreationForm g = new GameCreationForm(users);
             g.Owner = this;
             this.Hide();
             g.Show();

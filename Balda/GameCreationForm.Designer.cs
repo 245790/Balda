@@ -31,6 +31,7 @@
             this.labelHowManyPlayers = new System.Windows.Forms.Label();
             this.numericUpDownPlayersCount = new System.Windows.Forms.NumericUpDown();
             this.buttonShowMainForm = new System.Windows.Forms.Button();
+            this.buttonCreateGame = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlayersCount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,12 +79,23 @@
             this.buttonShowMainForm.UseVisualStyleBackColor = true;
             this.buttonShowMainForm.Click += new System.EventHandler(this.buttonShowMainForm_Click);
             // 
+            // buttonCreateGame
+            // 
+            this.buttonCreateGame.Location = new System.Drawing.Point(462, 348);
+            this.buttonCreateGame.Name = "buttonCreateGame";
+            this.buttonCreateGame.Size = new System.Drawing.Size(120, 23);
+            this.buttonCreateGame.TabIndex = 3;
+            this.buttonCreateGame.Text = "Создать игру";
+            this.buttonCreateGame.UseVisualStyleBackColor = true;
+            this.buttonCreateGame.Click += new System.EventHandler(this.buttonCreateGame_Click);
+            // 
             // GameCreationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 383);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonCreateGame);
             this.Controls.Add(this.buttonShowMainForm);
             this.Controls.Add(this.numericUpDownPlayersCount);
             this.Controls.Add(this.labelHowManyPlayers);
@@ -104,5 +116,6 @@
         private System.Windows.Forms.Label labelHowManyPlayers;
         private System.Windows.Forms.NumericUpDown numericUpDownPlayersCount;
         private System.Windows.Forms.Button buttonShowMainForm;
+        private System.Windows.Forms.Button buttonCreateGame;
     }
 }
