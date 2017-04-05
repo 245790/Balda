@@ -42,6 +42,7 @@
             this.createGameButton.TabIndex = 0;
             this.createGameButton.Text = "Создать игру";
             this.createGameButton.UseVisualStyleBackColor = true;
+            this.createGameButton.Click += new System.EventHandler(this.createGameButton_Click);
             // 
             // recordsButton
             // 

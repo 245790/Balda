@@ -15,3 +15,4 @@ C:\Users\Денис\Desktop\balda\Balda\obj\x86\Debug\Balda.Form1.resources
 C:\Users\Денис\Desktop\balda\Balda\obj\x86\Debug\Balda.Properties.Resources.resources
 C:\Users\Денис\Desktop\balda\Balda\obj\x86\Debug\Balda.csproj.GenerateResource.Cache
 C:\Users\Денис\Desktop\balda\Balda\obj\x86\Debug\Balda.csprojResolveAssemblyReference.cache
+C:\Users\Денис\Desktop\balda\Balda\obj\x86\Debug\Balda.GameCreationForm.resources

@@ -50,5 +50,13 @@ namespace Balda
                 this.Close();
             }
         }
+
+        private void createGameButton_Click(object sender, EventArgs e)
+        {
+            GameCreationForm g = new GameCreationForm();
+            g.Owner = this;
+            this.Hide();
+            g.Show();
+        }
     }
 }
