@@ -102,6 +102,24 @@ namespace Balda
 
         private void buttonCreateGame_Click(object sender, EventArgs e)
         {
+            string startWord = textBoxStartWord.Text.ToUpper();
+            if (!wordBase.Contains(startWord))
+            {
+                MessageBox.Show("Такого слова нет в базе!");
+                return;
+            }
+            int n = playerTypes.Length;
+            int m = startWord.Length;
+            if (m % 2 == 0)
+            {
+                MessageBox.Show("Нельзя выбирать слова с чётным количеством букв.");
+                return;
+            }
+            if (!(m * (m - 1) % n == 0))
+            {
+                MessageBox.Show("С таким словом у игроков будет неодинаковое количество ходов.");
+                return;
+            }
             List<string> realPlayerNames = new List<string>();
             List<Player> players = new List<Player>();
             for (int i = 0; i < playerTypes.Length; ++i)
@@ -161,6 +179,15 @@ namespace Balda
                 }
             }
             // contruct "Game" object somewhere there
+        }
+
+        private void textBoxStartWord_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char letter = e.KeyChar.ToString().ToUpper()[0];
+            if (!(letter >= 'А' && letter <= 'Я' || e.KeyChar == 8))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
