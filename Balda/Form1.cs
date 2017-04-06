@@ -16,6 +16,8 @@ namespace Balda
     {
         private Dictionary<string, int> users; // NAME -> RATING
 
+        private HashSet<string> wordBase;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +29,24 @@ namespace Balda
             Stream stream = new FileStream("../../users.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
             users = (Dictionary<string, int>)formatter.Deserialize(stream);
             stream.Close();
+
+            Stream stream2 = new FileStream("../../wordBase.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+            wordBase = (HashSet<string>)formatter.Deserialize(stream2);
+            stream2.Close();
+
+            /*string[] lines = System.IO.File.ReadAllLines(@"../../word_rus.txt");
+            HashSet<string> wordBase = new HashSet<string>();
+            foreach (string word in lines)
+            {
+                if (!word.Contains('-'))
+                {
+                    wordBase.Add(word.ToUpper());
+                }
+            }
+            IFormatter formatter2 = new BinaryFormatter();
+            Stream stream2 = new FileStream("../../wordBase.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            formatter.Serialize(stream2, wordBase);
+            stream2.Close();*/
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -51,7 +71,7 @@ namespace Balda
 
         private void createGameButton_Click(object sender, EventArgs e)
         {
-            GameCreationForm g = new GameCreationForm(users);
+            GameCreationForm g = new GameCreationForm(users, wordBase);
             g.Owner = this;
             this.Hide();
             g.Show();

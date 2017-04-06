@@ -15,6 +15,7 @@ namespace Balda
         private TextBox[] playerNames;
         private ComboBox[] playerTypes;
         private Dictionary<string, int> users;
+        private HashSet<string> wordBase;
         private Color[] playerColors = { Color.Red,
                                          Color.Blue,
                                          Color.Green,
@@ -36,10 +37,11 @@ namespace Balda
                                                  "Йота",
                                                  "Каппа"};
 
-        public GameCreationForm(Dictionary<string, int> users)
+        public GameCreationForm(Dictionary<string, int> users, HashSet<string> wordBase)
         {
             InitializeComponent();
             this.users = users;
+            this.wordBase = wordBase;
             playerNames = new TextBox[2];
             playerTypes = new ComboBox[2];
             for (int i = 0; i < 2; ++i)
