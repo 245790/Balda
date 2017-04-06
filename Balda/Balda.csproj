@@ -58,8 +58,13 @@
     <Compile Include="GameCreationForm.Designer.cs">
       <DependentUpon>GameCreationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComputerStrategy.cs" />
+    <Compile Include="HumanStrategy.cs" />
+    <Compile Include="Move.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IStrategy.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

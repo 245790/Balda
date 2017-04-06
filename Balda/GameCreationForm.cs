@@ -15,6 +15,26 @@ namespace Balda
         private TextBox[] playerNames;
         private ComboBox[] playerTypes;
         private Dictionary<string, int> users;
+        private Color[] playerColors = { Color.Red,
+                                         Color.Blue,
+                                         Color.Green,
+                                         Color.Magenta,
+                                         Color.Teal,
+                                         Color.Chocolate,
+                                         Color.Indigo,
+                                         Color.DarkOrchid,
+                                         Color.DarkRed,
+                                         Color.DimGray};
+        private string[] computerPlayerNames = { "Альфа",
+                                                 "Бета",
+                                                 "Гамма",
+                                                 "Дельта",
+                                                 "Эпсилон",
+                                                 "Дзета",
+                                                 "Эта",
+                                                 "Тета",
+                                                 "Йота",
+                                                 "Каппа"};
 
         public GameCreationForm(Dictionary<string, int> users)
         {
@@ -33,6 +53,8 @@ namespace Balda
             playerNames[i] = new TextBox();
             playerNames[i].Size = new Size(140, 16);
             playerNames[i].Text = "Как вас зовут?";
+            playerNames[i].MaxLength = 16;
+            playerNames[i].ForeColor = playerColors[i];
             playerNames[i].Location = i % 2 == 0 ? new Point(10, 36 + i / 2 * 16 + (i / 2 + 1) * 10) : new Point(310, 36 + i / 2 * 16 + (i / 2 + 1) * 10);
             playerTypes[i] = new ComboBox();
             playerTypes[i].Size = new Size(130, 16);
@@ -79,11 +101,21 @@ namespace Balda
         private void buttonCreateGame_Click(object sender, EventArgs e)
         {
             List<string> realPlayerNames = new List<string>();
+            List<Player> players = new List<Player>();
             for (int i = 0; i < playerTypes.Length; ++i)
             {
                 if (playerTypes[i].SelectedText == "Реальный игрок")
                 {
                     string realPlayerName = playerNames[i].Text;
+                    if (realPlayerName == "")
+                    {
+                        MessageBox.Show("Вы не ввели имя игрока!");
+                        return;
+                    }
+                    players.Add(new Player(new HumanStrategy(),
+                                           realPlayerName,
+                                           playerColors[i],
+                                           0));
                     if (!realPlayerNames.Contains(realPlayerName))
                     {
                         realPlayerNames.Add(realPlayerName);
@@ -94,6 +126,30 @@ namespace Balda
                         return;
                     }
                 }
+                else
+                {
+                    switch (playerTypes[i].SelectedText)
+                    {
+                        case "Сильный ИИ":
+                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Hard),
+                                        "Сильный ИИ " + computerPlayerNames[i],
+                                        playerColors[i],
+                                        0));
+                            break;
+                        case "Средний ИИ":
+                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Medium),
+                                        "Средний ИИ " + computerPlayerNames[i],
+                                        playerColors[i],
+                                        0));
+                            break;
+                        case "Слабый ИИ":
+                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Easy),
+                                        "Слабый ИИ " + computerPlayerNames[i],
+                                        playerColors[i],
+                                        0));
+                            break;
+                    }
+                }
             }
             foreach (string realPlayerName in realPlayerNames)
             {
@@ -102,7 +158,7 @@ namespace Balda
                     users.Add(realPlayerName, defaultRating);
                 }
             }
-            // don't forget to construct Player objects somewhere in this method
+            // contruct "Game" object somewhere there
         }
     }
 }
