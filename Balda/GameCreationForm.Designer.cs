@@ -32,6 +32,8 @@
             this.numericUpDownPlayersCount = new System.Windows.Forms.NumericUpDown();
             this.buttonShowMainForm = new System.Windows.Forms.Button();
             this.buttonCreateGame = new System.Windows.Forms.Button();
+            this.labelStartWord = new System.Windows.Forms.Label();
+            this.textBoxStartWord = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlayersCount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,12 +91,33 @@
             this.buttonCreateGame.UseVisualStyleBackColor = true;
             this.buttonCreateGame.Click += new System.EventHandler(this.buttonCreateGame_Click);
             // 
+            // labelStartWord
+            // 
+            this.labelStartWord.AutoSize = true;
+            this.labelStartWord.Location = new System.Drawing.Point(10, 210);
+            this.labelStartWord.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelStartWord.Name = "labelStartWord";
+            this.labelStartWord.Size = new System.Drawing.Size(121, 16);
+            this.labelStartWord.TabIndex = 4;
+            this.labelStartWord.Text = "Стартовое слово";
+            // 
+            // textBoxStartWord
+            // 
+            this.textBoxStartWord.Location = new System.Drawing.Point(136, 207);
+            this.textBoxStartWord.MaxLength = 15;
+            this.textBoxStartWord.Name = "textBoxStartWord";
+            this.textBoxStartWord.Size = new System.Drawing.Size(116, 22);
+            this.textBoxStartWord.TabIndex = 5;
+            this.textBoxStartWord.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxStartWord_KeyPress);
+            // 
             // GameCreationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 383);
             this.ControlBox = false;
+            this.Controls.Add(this.textBoxStartWord);
+            this.Controls.Add(this.labelStartWord);
             this.Controls.Add(this.buttonCreateGame);
             this.Controls.Add(this.buttonShowMainForm);
             this.Controls.Add(this.numericUpDownPlayersCount);
@@ -117,5 +140,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownPlayersCount;
         private System.Windows.Forms.Button buttonShowMainForm;
         private System.Windows.Forms.Button buttonCreateGame;
+        private System.Windows.Forms.Label labelStartWord;
+        private System.Windows.Forms.TextBox textBoxStartWord;
     }
 }
