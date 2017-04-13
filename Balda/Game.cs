@@ -18,13 +18,23 @@ namespace Balda
         }
         public SortedDictionary<int, Player> play() 
         {
-            while (winCondition()) 
+            bool gameEnded = false;
+            while (!gameEnded) 
             {
                 foreach (Player player in Players) 
                 {
                     processPlayer(player);
+                    gameEnded = winCondition();
+                    if (gameEnded)
+                    {
+                        break;
+                    }
                 }
+                // highlight the whole move
+                // wait 4 secs
             }
+            // form a dictionary of players, sorted by their game score
+            // return it, not null
             return null;        
         }
         private bool winCondition()
@@ -36,9 +46,14 @@ namespace Balda
             Move move = new Move();
             do
             {
-
+                player.Strategy.move(State, ref move, Rules);
+                switch (move.Action)
+                { 
+                   
+                }
             }
             while (move.Action != ActionType.EndTurn && move.Action != ActionType.PassTurn);
+            // if the user chose non-existing word, we should ask him for another word instead of exitting
         }
     }
 }
