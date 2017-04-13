@@ -7,29 +7,14 @@ namespace Balda
 {
     class Move
     {
-        private List<int> x;
-        private List<int> y;
-
+        enum ActionType { EnterLetter, SelectLetter, EndTurn, PassTurn, Reset, UnknownAction };
+        public int X { get; set; }
+        public int Y { get; set; }
+        public char Letter { get; set; }
+        public ActionType Action { get; set; }
         public Move()
         {
-            x = new List<int>();
-            y = new List<int>();
-        }
-
-        public void addLetter(int x, int y)
-        {
-            this.x.Add(x);
-            this.y.Add(y);
-        }
-
-        public List<int> getX()
-        {
-            return x;
-        }
-
-        public List<int> getY()
-        {
-            return y;
-        }
+            Action = ActionType.UnknownAction;
+        }       
     }
 }
