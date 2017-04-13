@@ -7,6 +7,6 @@ namespace Balda
 {
     class Game
     {
-
+        
     }
 }
