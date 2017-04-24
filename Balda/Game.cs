@@ -7,15 +7,17 @@ namespace Balda
 {
     class Game
     {
-        public FieldState State { get; private set; }
+        public FieldState State { get;  private set; }
         public Rules Rules { get; private set; }
         public List<Player> Players { get; private set; }
+
         public Game(string startWord, List<Player> players, Rules rules)
         {
             State = new FieldState(startWord);
             Rules = rules;
             Players = players;
         }
+
         public SortedDictionary<int, Player> play() 
         {
             bool gameEnded = false;
@@ -37,10 +39,12 @@ namespace Balda
             // return it, not null
             return null;        
         }
+
         private bool winCondition()
         {
             return true;            
         }
+
         private void processPlayer(Player player)
         {
             Move move = new Move();
@@ -48,8 +52,8 @@ namespace Balda
             {
                 player.Strategy.move(State, ref move, Rules);
                 switch (move.Action)
-                { 
-                   
+                {
+                    
                 }
             }
             while (move.Action != ActionType.EndTurn && move.Action != ActionType.PassTurn);
