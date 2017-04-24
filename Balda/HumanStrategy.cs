@@ -7,9 +7,22 @@ namespace Balda
 {
     class HumanStrategy : IStrategy
     {
-        // we have to store references to Windows Controls so as to choose the word from them
+        private GamingForm gamingForm;
+
+        public HumanStrategy(GamingForm gamingForm)
+        {
+            this.gamingForm = gamingForm;
+        }
+
         public void move(FieldState field, ref Move move, Rules rules)
         {
+            do
+            {
+                move = gamingForm.HumanMove;
+            }
+            while (move == null);
+            // ↓ А это просто красиво.
+            // while ((move = gamingForm.HumanMove) == null);
             return;
         }
     }

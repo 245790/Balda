@@ -122,6 +122,10 @@ namespace Balda
             }
             List<string> realPlayerNames = new List<string>();
             List<Player> players = new List<Player>();
+
+            GamingForm gamingForm = new GamingForm();
+            gamingForm.Owner = this.Owner;
+
             for (int i = 0; i < playerTypes.Length; ++i)
             {
                 if (playerTypes[i].SelectedText == "Реальный игрок")
@@ -132,10 +136,7 @@ namespace Balda
                         MessageBox.Show("Вы не ввели имя игрока!");
                         return;
                     }
-                    players.Add(new Player(new HumanStrategy(),
-                                           realPlayerName,
-                                           playerColors[i],
-                                           0));
+
                     if (!realPlayerNames.Contains(realPlayerName))
                     {
                         realPlayerNames.Add(realPlayerName);
@@ -145,6 +146,11 @@ namespace Balda
                         MessageBox.Show("Вы ввели одно или несколько одинаковых имён реальных игроков");
                         return;
                     }
+
+                    players.Add(new Player(new HumanStrategy(gamingForm),
+                                           realPlayerName,
+                                           playerColors[i],
+                                           0));
                 }
                 else
                 {
@@ -179,6 +185,12 @@ namespace Balda
                 }
             }
             // contruct "Game" object somewhere there
+            Game game = new Game(startWord, players, new Rules());
+            gamingForm.Game = game;
+            gamingForm.Show();
+            
+            // gamingForm.play();
+            this.Close();
         }
 
         private void textBoxStartWord_KeyPress(object sender, KeyPressEventArgs e)
