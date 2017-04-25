@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Balda
 {
-    class Player
+    public class Player
     {
         public IStrategy Strategy { get; private set; }
         public string Name { get; private set; }

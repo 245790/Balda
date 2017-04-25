@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Balda
 {
-    interface IStrategy
+    public interface IStrategy
     {
         void move(FieldState field, ref Move move, Rules rules);
     }

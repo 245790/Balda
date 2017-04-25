@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Balda
 {
-    enum ActionType { EnterLetter, SelectLetter, EndTurn, PassTurn, Reset, UnknownAction };
-    class Move : ICloneable
+    public enum ActionType { EnterLetter, SelectLetter, EndTurn, PassTurn, Reset, UnknownAction };
+    public class Move : ICloneable
     {        
         public int X { get; set; }
         public int Y { get; set; }

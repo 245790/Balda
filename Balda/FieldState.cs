@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Balda
 {
-    class FieldState
+    public class FieldState
     {
         public char[,] Field { get; set; }
         public int NewX { get; set; }

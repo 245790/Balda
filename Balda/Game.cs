@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Balda
 {
-    class Game
+    public class Game
     {
         public FieldState State { get;  private set; }
         public Rules Rules { get; private set; }

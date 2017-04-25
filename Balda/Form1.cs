@@ -16,7 +16,7 @@ namespace Balda
     {
         private Dictionary<string, int> users; // NAME -> RATING
 
-        private HashSet<string> wordBase;
+        private WordBase wordBase;
 
         public Form1()
         {
@@ -31,21 +31,23 @@ namespace Balda
             stream.Close();
 
             Stream stream2 = new FileStream("../../wordBase.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
-            wordBase = (HashSet<string>)formatter.Deserialize(stream2);
+            wordBase = (WordBase)formatter.Deserialize(stream2);
             stream2.Close();
 
-            /*string[] lines = System.IO.File.ReadAllLines(@"../../word_rus.txt");
-            HashSet<string> wordBase = new HashSet<string>();
+            /*
+            // Это чтобы преобразовать текстовый файл в сериализуемый бинарник
+            string[] lines = System.IO.File.ReadAllLines(@"../../word_rus.txt");
+            WordBase wb = new WordBase();
             foreach (string word in lines)
             {
                 if (!word.Contains('-'))
                 {
-                    wordBase.Add(word.ToUpper());
+                    wb.Add(word.ToUpper());
                 }
             }
             IFormatter formatter2 = new BinaryFormatter();
             Stream stream2 = new FileStream("../../wordBase.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-            formatter.Serialize(stream2, wordBase);
+            formatter.Serialize(stream2, wb);
             stream2.Close();*/
         }
 

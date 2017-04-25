@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Balda
 {
-    class Rules
+    public class Rules
     {
         public bool AllowDiagonal { get; private set;}
         public bool AllowIntersections { get; private set; }
