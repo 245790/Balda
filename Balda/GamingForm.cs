@@ -61,37 +61,47 @@ namespace Balda
             playingThread.Start();
         }
 
-        public void updateForm(FieldState field, Rules rules)
+        public void updateForm(FieldState state, Rules rules)
         {
             if (this.InvokeRequired)
             {
                 formUpdatingDelegate fud = new formUpdatingDelegate(updateForm);
-                this.Invoke(fud, new object[] { field, rules });
+                this.Invoke(fud, new object[] { state, rules });
             }
             else
             {
-                fieldDataGridView.RowCount = field.Field.GetLength(0);
-                fieldDataGridView.ColumnCount = field.Field.GetLength(1);
-                for (int i = 0; i < field.Field.GetLength(0); ++i)
+                fieldDataGridView.RowCount = state.Field.GetLength(0);
+                fieldDataGridView.ColumnCount = state.Field.GetLength(1);
+                for (int i = 0; i < state.Field.GetLength(0); ++i)
                 {
-                    fieldDataGridView.Rows[i].Height = fieldDataGridView.Size.Height / field.Field.GetLength(1);
-                    for (int j = 0; j < field.Field.GetLength(1); ++j)
+                    fieldDataGridView.Rows[i].Height = fieldDataGridView.Size.Height / state.Field.GetLength(1);
+                    for (int j = 0; j < state.Field.GetLength(1); ++j)
                     {
                         fieldDataGridView.Rows[i].Cells[j].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                        fieldDataGridView.Rows[i].Cells[j].Value = field.Field[i, j];
+                        fieldDataGridView.Rows[i].Cells[j].Value = state.Field[i, j];
                         fieldDataGridView.Rows[i].Cells[j].ReadOnly = true;
                     }
                 }
                 // ↓ is needed to remove the scroll bar
-                fieldDataGridView.Rows[0].Height = fieldDataGridView.Size.Height / field.Field.GetLength(1) - 2;
-                // if availableCells[i, j] = true, then the user is permitted to place letters there
-                bool[,] availableCells = rules.findAvailableCells(field);
-                // set all the cells to match this array
-                for (int i = 0; i < field.Field.GetLength(0); ++i)
+                fieldDataGridView.Rows[0].Height = fieldDataGridView.Size.Height / state.Field.GetLength(1) - 2;
+                int newX = state.NewX;
+                int newY = state.NewY;
+                if (newX != -1 && newY != -1)
                 {
-                    for (int j = 0; j < field.Field.GetLength(1); ++j)
+                    // highlight the new letter
+                    fieldDataGridView.Rows[newY].Cells[newX].Style.ForeColor = Color.Red;
+                }
+                else
+                {
+                    // if availableCells[i, j] = true, then the user is permitted to place letters there
+                    bool[,] availableCells = rules.findAvailableCells(state);
+                    // set all the cells to match this array
+                    for (int i = 0; i < state.Field.GetLength(0); ++i)
                     {
-                        fieldDataGridView.Rows[i].Cells[j].ReadOnly = !availableCells[i, j];
+                        for (int j = 0; j < state.Field.GetLength(1); ++j)
+                        {
+                            fieldDataGridView.Rows[i].Cells[j].ReadOnly = !availableCells[i, j];
+                        }
                     }
                 }
             }
@@ -119,6 +129,10 @@ namespace Balda
                 this.humanMove.Y = rowIdx;
                 MessageBox.Show(humanMove.ToString());
                 humanMoveMutex.ReleaseMutex();
+            }
+            else
+            {
+                fieldDataGridView.Rows[rowIdx].Cells[colIdx].Value = "\0";
             }
         }
     }

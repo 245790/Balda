@@ -15,6 +15,8 @@ namespace Balda
 
         public Move()
         {
+            X = -1;
+            Y = -1;
             Action = ActionType.UnknownAction;
         }
 

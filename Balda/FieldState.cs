@@ -26,7 +26,7 @@ namespace Balda
                     }
                     else
                     {
-                        Field[i, j] = ' ';
+                        Field[i, j] = '\0';
                     }                    
                 }
             }

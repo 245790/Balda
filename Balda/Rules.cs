@@ -44,7 +44,7 @@ namespace Balda
                 dx = new int[] { 1, 0, -1,  0 };
                 dy = new int[] { 0, 1,  0, -1 };
             }
-            char nullLetter = ' ';
+            char nullLetter = '\0';
             for (int i = 0; i < field.Field.GetLength(0); ++i)
             {
                 for (int j = 0; j < field.Field.GetLength(1); ++j)
