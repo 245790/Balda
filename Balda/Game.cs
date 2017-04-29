@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Balda
 {
@@ -36,7 +37,7 @@ namespace Balda
                 // wait 4 secs
             }
             // form a dictionary of players, sorted by their game score
-            // return it, not null
+            // return IT, not null!
             return null;        
         }
 
@@ -50,14 +51,41 @@ namespace Balda
             Move move = new Move();
             do
             {
-                player.Strategy.move(State, ref move, Rules);
+                player.Strategy.move(State, ref move, Rules);                
                 switch (move.Action)
                 {
-                    
+                    case ActionType.EnterLetter:
+                        int x = move.X, y = move.Y;
+                        int width = State.Field.GetLength(0);
+                        if (x < 0 || x >= width || y < 0 || y >= width)
+                        {
+                            // indices out of range
+                            break;
+                        }
+                        move.Letter = Char.ToUpper(move.Letter);
+                        if (!isCapitalRussianLetter(move.Letter))
+                        {
+                            // incorrect character
+                            break;
+                        }
+                        if (State.NewX != -1 && State.NewY != -1)
+                        {
+                            // user already entered new letter
+                            break;
+                        }
+                        State.NewX = x;
+                        State.NewY = y;
+                        State.Field[y, x] = move.Letter;
+                        break;
                 }
             }
             while (move.Action != ActionType.EndTurn && move.Action != ActionType.PassTurn);
             // if the user chose non-existing word, we should ask him for another word instead of exitting
+        }
+
+        private bool isCapitalRussianLetter(Char letter)
+        {
+            return letter >= 'А' && letter <= 'Я';
         }
     }
 }

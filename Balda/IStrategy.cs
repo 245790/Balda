@@ -7,6 +7,6 @@ namespace Balda
 {
     public interface IStrategy
     {
-        void move(FieldState field, ref Move move, Rules rules);
+        void move(FieldState state, ref Move move, Rules rules);
     }
 }

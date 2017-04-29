@@ -16,7 +16,7 @@ namespace Balda
             this.str = str;
         }
 
-        public void move(FieldState field, ref Move move, Rules rules)
+        public void move(FieldState state, ref Move move, Rules rules)
         {
             // check the str variable before choosing the word
             return;

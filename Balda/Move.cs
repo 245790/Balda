@@ -15,12 +15,19 @@ namespace Balda
 
         public Move()
         {
+            X = -1;
+            Y = -1;
             Action = ActionType.UnknownAction;
         }
 
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return String.Format("X = {0} Y = {1} Letter = {2} Action = {3}", X.ToString(), Y.ToString(), Letter.ToString(), Action.ToString());
         }
     }
 }
