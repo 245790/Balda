@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Balda
 {
@@ -16,6 +17,7 @@ namespace Balda
 
         public void move(FieldState field, ref Move move, Rules rules)
         {
+            gamingForm.updateForm(field, rules);
             do
             {
                 move = gamingForm.HumanMove;

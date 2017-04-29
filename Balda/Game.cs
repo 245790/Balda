@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Balda
 {
@@ -50,7 +51,7 @@ namespace Balda
             Move move = new Move();
             do
             {
-                player.Strategy.move(State, ref move, Rules);
+                player.Strategy.move(State, ref move, Rules);                
                 switch (move.Action)
                 {
                     

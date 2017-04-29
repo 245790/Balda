@@ -20,7 +20,7 @@ namespace Balda
             {
                 for (int j = 0; j < wordLen; j++)
                 {
-                    if (i == wordLen / 2 + 1)
+                    if (i == wordLen / 2)
                     {
                         Field[i, j] = startWord[j];
                     }

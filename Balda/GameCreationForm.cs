@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Balda
 {
@@ -188,8 +189,6 @@ namespace Balda
             Game game = new Game(startWord, players, new Rules());
             gamingForm.Game = game;
             gamingForm.Show();
-            
-            // gamingForm.play();
             this.Close();
         }
 

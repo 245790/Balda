@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Balda
 {
@@ -27,6 +28,51 @@ namespace Balda
             AllowRepeats = allowRepeats;
             HasTimeLimit = hasTimeLimit;
             TimeLimit = timeLimit;
+        }
+
+        public bool[,] findAvailableCells(FieldState field)
+        {
+            bool[,] result = new bool[field.Field.GetLength(0), field.Field.GetLength(1)];
+            int[] dx, dy;
+            if (this.AllowDiagonal == true)
+            {
+                dx = new int[] { 1, 0, -1,  0, 1,  1, -1, -1 };
+                dy = new int[] { 0, 1,  0, -1, 1, -1,  1, -1 };
+            }
+            else
+            {
+                dx = new int[] { 1, 0, -1,  0 };
+                dy = new int[] { 0, 1,  0, -1 };
+            }
+            char nullLetter = ' ';
+            for (int i = 0; i < field.Field.GetLength(0); ++i)
+            {
+                for (int j = 0; j < field.Field.GetLength(1); ++j)
+                {
+                    if (field.Field[i, j] != nullLetter)
+                    {
+                        for (int k = 0; k < dx.Length; ++k)
+                        {
+                            try
+                            {
+                                if (field.Field[i + dy[k], j + dx[k]] == nullLetter)
+                                {
+                                    result[i + dy[k], j + dx[k]] = true;
+                                }
+                            }
+                            catch(IndexOutOfRangeException)
+                            {
+                                // this is OK, do nothing
+                            }
+                            catch(Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }    
 }
