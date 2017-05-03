@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.fieldDataGridView = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonShowMainForm = new System.Windows.Forms.Button();
+            this.textBoxWord = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,7 +44,7 @@
             this.fieldDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.fieldDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.fieldDataGridView.ColumnHeadersVisible = false;
-            this.fieldDataGridView.Location = new System.Drawing.Point(12, 12);
+            this.fieldDataGridView.Location = new System.Drawing.Point(212, 12);
             this.fieldDataGridView.MultiSelect = false;
             this.fieldDataGridView.Name = "fieldDataGridView";
             this.fieldDataGridView.RowHeadersVisible = false;
@@ -50,17 +52,34 @@
             this.fieldDataGridView.ShowEditingIcon = false;
             this.fieldDataGridView.Size = new System.Drawing.Size(200, 200);
             this.fieldDataGridView.TabIndex = 0;
+            this.fieldDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.fieldDataGridView_CellClick);
             this.fieldDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.fieldDataGridView_CellEndEdit);
             // 
-            // button1
+            // buttonShowMainForm
             // 
-            this.button1.Location = new System.Drawing.Point(544, 29);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonShowMainForm.Location = new System.Drawing.Point(501, 12);
+            this.buttonShowMainForm.Name = "buttonShowMainForm";
+            this.buttonShowMainForm.Size = new System.Drawing.Size(155, 23);
+            this.buttonShowMainForm.TabIndex = 1;
+            this.buttonShowMainForm.Text = "Вернуться на главную";
+            this.buttonShowMainForm.UseVisualStyleBackColor = true;
+            this.buttonShowMainForm.Click += new System.EventHandler(this.buttonShowMainForm_Click);
+            // 
+            // textBoxWord
+            // 
+            this.textBoxWord.Location = new System.Drawing.Point(285, 231);
+            this.textBoxWord.Name = "textBoxWord";
+            this.textBoxWord.Size = new System.Drawing.Size(127, 20);
+            this.textBoxWord.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(209, 234);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Ваше слово:";
             // 
             // GamingForm
             // 
@@ -68,7 +87,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 331);
             this.ControlBox = false;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxWord);
+            this.Controls.Add(this.buttonShowMainForm);
             this.Controls.Add(this.fieldDataGridView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "GamingForm";
@@ -77,12 +98,15 @@
             this.Shown += new System.EventHandler(this.GamingForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.DataGridView fieldDataGridView;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonShowMainForm;
+        private System.Windows.Forms.TextBox textBoxWord;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -14,6 +14,8 @@ namespace Balda
 
     public partial class GamingForm : Form
     {
+        //the newest local copy of state from the game server
+        FieldState state;
         Mutex humanMoveMutex;
         Thread playingThread;
         private Move humanMove;
@@ -63,6 +65,7 @@ namespace Balda
 
         public void updateForm(FieldState state, Rules rules)
         {
+            
             if (this.InvokeRequired)
             {
                 formUpdatingDelegate fud = new formUpdatingDelegate(updateForm);
@@ -70,6 +73,7 @@ namespace Balda
             }
             else
             {
+                this.state = state;
                 fieldDataGridView.RowCount = state.Field.GetLength(0);
                 fieldDataGridView.ColumnCount = state.Field.GetLength(1);
                 for (int i = 0; i < state.Field.GetLength(0); ++i)
@@ -90,6 +94,12 @@ namespace Balda
                 {
                     // highlight the new letter
                     fieldDataGridView.Rows[newY].Cells[newX].Style.ForeColor = Color.Red;
+                    textBoxWord.Text = "";
+                    for (int i = 0; i < state.X.Count(); i++)
+                    {
+                        fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Style.ForeColor = Color.Blue;
+                        textBoxWord.Text += fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Value;
+                    }
                 }
                 else
                 {
@@ -107,7 +117,7 @@ namespace Balda
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonShowMainForm_Click(object sender, EventArgs e)
         {
             playingThread.Abort();
             this.Owner.Show();
@@ -134,6 +144,24 @@ namespace Balda
             {
                 fieldDataGridView.Rows[rowIdx].Cells[colIdx].Value = "\0";
             }
+        }
+
+        private void fieldDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (state.NewX != -1 && state.NewY != -1) //it means that user entered letter
+            {
+                int rowIdx = e.RowIndex;
+                int colIdx = e.ColumnIndex;
+                humanMoveMutex.WaitOne();
+                this.humanMove = new Move();
+                this.humanMove.Action = ActionType.SelectLetter;
+                this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
+                this.humanMove.X = colIdx;
+                this.humanMove.Y = rowIdx;
+                MessageBox.Show(humanMove.ToString());
+                humanMoveMutex.ReleaseMutex();
+            }
+            
         }
     }
 }
