@@ -30,6 +30,41 @@ namespace Balda
             TimeLimit = timeLimit;
         }
 
+        public bool isNeighbours(int x1, int y1, int x2, int y2)
+        {
+            int[] dx, dy;
+            if (this.AllowDiagonal == true)
+            {
+                dx = new int[] { 1, 0, -1, 0, 1, 1, -1, -1 };
+                dy = new int[] { 0, 1, 0, -1, 1, -1, 1, -1 };
+            }
+            else
+            {
+                dx = new int[] { 1, 0, -1, 0 };
+                dy = new int[] { 0, 1, 0, -1 };
+            }
+            for (int k = 0; k < dx.Length; ++k)
+            {
+                try
+                {
+                    if (y1 + dy[k] == y2 && x1 + dx[k] == x2)
+                    {
+                        return true;
+                    }
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+            return false;
+        }
+
         public bool[,] findAvailableCells(FieldState field)
         {
             bool[,] result = new bool[field.Field.GetLength(0), field.Field.GetLength(1)];

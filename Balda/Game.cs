@@ -55,6 +55,7 @@ namespace Balda
                 switch (move.Action)
                 {
                     case ActionType.EnterLetter:
+                    {
                         int x = move.X, y = move.Y;
                         int width = State.Field.GetLength(0);
                         if (x < 0 || x >= width || y < 0 || y >= width)
@@ -76,7 +77,49 @@ namespace Balda
                         State.NewX = x;
                         State.NewY = y;
                         State.Field[y, x] = move.Letter;
-                        break;
+                    }
+                    break;
+                    case ActionType.SelectLetter:
+                    {
+                        int wordLength = State.X.Count; 
+                        int x = move.X, y = move.Y;
+                        int width = State.Field.GetLength(0);
+                        if (x < 0 || x >= width || y < 0 || y >= width)
+                        {
+                            // indices out of range
+                            break;
+                        }
+                        char nullLetter = '\0';
+                        if (State.Field[y, x] == nullLetter)
+                        {//user must select only letters;
+                            break;
+                        }
+                        if (wordLength == 0)
+                        {
+                            State.X.Add(x);
+                            State.Y.Add(y);
+                            break;
+                        }
+                        if (!Rules.AllowIntersections)
+                        {
+                            for (int i = 0; i < wordLength; i++)
+                            {
+                                if (State.X[i] == x && State.Y[i] == y)
+                                    //new coordinate intersects with the word
+                                    break;
+                            }
+                        }
+                        if (Rules.isNeighbours(x, y, State.X[wordLength-1], State.Y[wordLength-1]))
+                        {
+                            State.X.Add(x);
+                            State.Y.Add(y);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    break;
                 }
             }
             while (move.Action != ActionType.EndTurn && move.Action != ActionType.PassTurn);
