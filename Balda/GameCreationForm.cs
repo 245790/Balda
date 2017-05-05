@@ -188,6 +188,7 @@ namespace Balda
             // contruct "Game" object somewhere there
             Rules rules = new Rules();
             rules.AllowDiagonal = checkBoxAllowDiagonal.Checked;
+            rules.AllowIntersections = checkBoxAllowIntersections.Checked;
             Game game = new Game(startWord, players, rules);
             gamingForm.Game = game;
             gamingForm.Show();

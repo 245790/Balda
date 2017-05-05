@@ -83,6 +83,7 @@ namespace Balda
                     {
                         int wordLength = State.X.Count; 
                         int x = move.X, y = move.Y;
+                        bool isCorrect = true;
                         int width = State.Field.GetLength(0);
                         if (x < 0 || x >= width || y < 0 || y >= width)
                         {
@@ -105,9 +106,13 @@ namespace Balda
                             for (int i = 0; i < wordLength; i++)
                             {
                                 if (State.X[i] == x && State.Y[i] == y)
+                                {
                                     //new coordinate intersects with the word
+                                    isCorrect = false;
                                     break;
+                                }
                             }
+                            if (!isCorrect) break;
                         }
                         if (Rules.isNeighbours(x, y, State.X[wordLength-1], State.Y[wordLength-1]))
                         {
