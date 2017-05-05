@@ -186,7 +186,9 @@ namespace Balda
                 }
             }
             // contruct "Game" object somewhere there
-            Game game = new Game(startWord, players, new Rules());
+            Rules rules = new Rules();
+            rules.AllowDiagonal = checkBoxAllowDiagonal.Checked;
+            Game game = new Game(startWord, players, rules);
             gamingForm.Game = game;
             gamingForm.Show();
             this.Close();

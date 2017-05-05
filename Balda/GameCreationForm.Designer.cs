@@ -34,6 +34,7 @@
             this.buttonCreateGame = new System.Windows.Forms.Button();
             this.labelStartWord = new System.Windows.Forms.Label();
             this.textBoxStartWord = new System.Windows.Forms.TextBox();
+            this.checkBoxAllowDiagonal = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlayersCount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,12 +112,23 @@
             this.textBoxStartWord.Text = "АББАТ";
             this.textBoxStartWord.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxStartWord_KeyPress);
             // 
+            // checkBoxAllowDiagonal
+            // 
+            this.checkBoxAllowDiagonal.AutoSize = true;
+            this.checkBoxAllowDiagonal.Location = new System.Drawing.Point(13, 243);
+            this.checkBoxAllowDiagonal.Name = "checkBoxAllowDiagonal";
+            this.checkBoxAllowDiagonal.Size = new System.Drawing.Size(165, 20);
+            this.checkBoxAllowDiagonal.TabIndex = 6;
+            this.checkBoxAllowDiagonal.Text = "Ходить по диагонали";
+            this.checkBoxAllowDiagonal.UseVisualStyleBackColor = true;
+            // 
             // GameCreationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 383);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxAllowDiagonal);
             this.Controls.Add(this.textBoxStartWord);
             this.Controls.Add(this.labelStartWord);
             this.Controls.Add(this.buttonCreateGame);
@@ -143,5 +155,6 @@
         private System.Windows.Forms.Button buttonCreateGame;
         private System.Windows.Forms.Label labelStartWord;
         private System.Windows.Forms.TextBox textBoxStartWord;
+        private System.Windows.Forms.CheckBox checkBoxAllowDiagonal;
     }
 }

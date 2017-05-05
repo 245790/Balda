@@ -8,11 +8,11 @@ namespace Balda
 {
     public class Rules
     {
-        public bool AllowDiagonal { get; private set;}
-        public bool AllowIntersections { get; private set; }
-        public bool AllowRepeats { get; private set; }
-        public bool HasTimeLimit { get; private set; }
-        public int TimeLimit { get; private set; }
+        public bool AllowDiagonal { get; set;}
+        public bool AllowIntersections { get; set; }
+        public bool AllowRepeats { get; set; }
+        public bool HasTimeLimit { get; set; }
+        public int TimeLimit { get; set; }
         public Rules()
         {
             AllowRepeats = true;
