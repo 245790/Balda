@@ -69,6 +69,7 @@
             // 
             this.textBoxWord.Location = new System.Drawing.Point(285, 231);
             this.textBoxWord.Name = "textBoxWord";
+            this.textBoxWord.ReadOnly = true;
             this.textBoxWord.Size = new System.Drawing.Size(127, 20);
             this.textBoxWord.TabIndex = 2;
             // 

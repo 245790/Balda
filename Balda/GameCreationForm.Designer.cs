@@ -35,6 +35,7 @@
             this.labelStartWord = new System.Windows.Forms.Label();
             this.textBoxStartWord = new System.Windows.Forms.TextBox();
             this.checkBoxAllowDiagonal = new System.Windows.Forms.CheckBox();
+            this.checkBoxAllowIntersections = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlayersCount)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,12 +123,23 @@
             this.checkBoxAllowDiagonal.Text = "Ходить по диагонали";
             this.checkBoxAllowDiagonal.UseVisualStyleBackColor = true;
             // 
+            // checkBoxAllowIntersections
+            // 
+            this.checkBoxAllowIntersections.AutoSize = true;
+            this.checkBoxAllowIntersections.Location = new System.Drawing.Point(12, 269);
+            this.checkBoxAllowIntersections.Name = "checkBoxAllowIntersections";
+            this.checkBoxAllowIntersections.Size = new System.Drawing.Size(224, 20);
+            this.checkBoxAllowIntersections.TabIndex = 7;
+            this.checkBoxAllowIntersections.Text = "Пересекать слово само собой";
+            this.checkBoxAllowIntersections.UseVisualStyleBackColor = true;
+            // 
             // GameCreationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 383);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxAllowIntersections);
             this.Controls.Add(this.checkBoxAllowDiagonal);
             this.Controls.Add(this.textBoxStartWord);
             this.Controls.Add(this.labelStartWord);
@@ -156,5 +168,6 @@
         private System.Windows.Forms.Label labelStartWord;
         private System.Windows.Forms.TextBox textBoxStartWord;
         private System.Windows.Forms.CheckBox checkBoxAllowDiagonal;
+        private System.Windows.Forms.CheckBox checkBoxAllowIntersections;
     }
 }
