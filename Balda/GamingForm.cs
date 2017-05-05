@@ -84,12 +84,13 @@ namespace Balda
                         fieldDataGridView.Rows[i].Cells[j].Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                         fieldDataGridView.Rows[i].Cells[j].Value = state.Field[i, j];
                         fieldDataGridView.Rows[i].Cells[j].ReadOnly = true;
+                        fieldDataGridView.Rows[i].Cells[j].Selected = false;
                     }
                 }
                 // ↓ is needed to remove the scroll bar
                 fieldDataGridView.Rows[0].Height = fieldDataGridView.Size.Height / state.Field.GetLength(1) - 2;
                 int newX = state.NewX;
-                int newY = state.NewY;
+                int newY = state.NewY; 
                 if (newX != -1 && newY != -1)
                 {
                     // highlight the new letter
@@ -97,7 +98,7 @@ namespace Balda
                     textBoxWord.Text = "";
                     for (int i = 0; i < state.X.Count(); i++)
                     {
-                        fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Style.ForeColor = Color.Blue;
+                        fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Style.ForeColor = Color.Green;
                         textBoxWord.Text += fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Value;
                     }
                 }
@@ -137,7 +138,6 @@ namespace Balda
                 this.humanMove.Letter = newValue[0];
                 this.humanMove.X = colIdx;
                 this.humanMove.Y = rowIdx;
-                MessageBox.Show(humanMove.ToString());
                 humanMoveMutex.ReleaseMutex();
             }
             else
@@ -158,7 +158,6 @@ namespace Balda
                 this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
                 this.humanMove.X = colIdx;
                 this.humanMove.Y = rowIdx;
-                MessageBox.Show(humanMove.ToString());
                 humanMoveMutex.ReleaseMutex();
             }
             
