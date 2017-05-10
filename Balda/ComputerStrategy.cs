@@ -187,7 +187,7 @@ namespace Balda
         public void move(FieldState state, ref Move move, Rules rules)
         {
             gamingForm.updateForm(state, rules);
-            if (optimalMove.Count == 0)
+            if (optimalMove.Count == 0) // this holds only on the first move of the iteration
             {
                 int nonDiagonalCounter = 0;
                 // then find the optimal move
@@ -325,9 +325,32 @@ namespace Balda
                         }
                     }
                 }
-                // MessageBox.Show(nonDiagonalCounter.ToString());
+                if (possibleMoves.Count == 0) // we have not found any possible word
+                {
+                    // in this case we can only pass a turn
+                    Move tmp = new Move();
+                    tmp.Action = ActionType.PassTurn;
+                    optimalMove.Push(tmp);
+                }
+                else
+                {
+                    possibleMoves.Sort((list1, list2) => list1.Count - list2.Count);
+                    int optimalIndex = 0;
+                    switch (str)
+                    {
+                        case StrategyStrength.Easy:
+                            optimalIndex = 0;
+                            break;
+                        case StrategyStrength.Medium:
+                            optimalIndex = possibleMoves.Count / 2;
+                            break;
+                        case StrategyStrength.Hard:
+                            optimalIndex = possibleMoves.Count - 1;
+                            break;
+                    }
+                    optimalMove = possibleMoves[optimalIndex];
+                }
             }
-            // check the str variable before choosing the word
             return;
         }
     }
