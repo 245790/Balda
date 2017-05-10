@@ -187,6 +187,7 @@ namespace Balda
         public void move(FieldState state, ref Move move, Rules rules)
         {
             gamingForm.updateForm(state, rules);
+            System.Threading.Thread.Sleep(700);
             if (optimalMove.Count == 0) // this holds only on the first move of the iteration
             {
                 int nonDiagonalCounter = 0;
@@ -223,13 +224,17 @@ namespace Balda
                         else
                         {
                             // there is only one possible start node
-                            st.Push(new FieldTreeNode(false,
-                                                        false,
-                                                        null,
-                                                        j,
-                                                        i,
-                                                        state.Field[i, j] - 'А',
-                                                        prefixTree[0, state.Field[i, j] - 'А']));
+                            // if there are words that start with this letter
+                            if (prefixTree[0, state.Field[i, j] - 'А'] != -1)
+                            {
+                                st.Push(new FieldTreeNode(false,
+                                                          false,
+                                                          null,
+                                                          j,
+                                                          i,
+                                                          state.Field[i, j] - 'А',
+                                                          prefixTree[0, state.Field[i, j] - 'А']));
+                            }
                         }
                         while (st.Count > 0)
                         {
@@ -255,12 +260,12 @@ namespace Balda
                                             if (prefixTree[cur.prefixTreeIndex, l] != -1)
                                             {
                                                 st.Push(new FieldTreeNode(true,
-                                                                            true,
-                                                                            cur,
-                                                                            cx + dx[k],
-                                                                            cy + dy[k],
-                                                                            l,
-                                                                            prefixTree[cur.prefixTreeIndex, l]));
+                                                                          true,
+                                                                          cur,
+                                                                          cx + dx[k],
+                                                                          cy + dy[k],
+                                                                          l,
+                                                                          prefixTree[cur.prefixTreeIndex, l]));
                                             }
                                         }
                                     }
@@ -269,12 +274,12 @@ namespace Balda
                                         && prefixTree[cur.prefixTreeIndex, state.Field[cy + dy[k], cx + dx[k]] - 'А'] != -1)
                                     {
                                         st.Push(new FieldTreeNode(false,
-                                                                    cur.newLetterUsed,
-                                                                    cur,
-                                                                    cx + dx[k],
-                                                                    cy + dy[k],
-                                                                    state.Field[cy + dy[k], cx + dx[k]] - 'А',
-                                                                    prefixTree[cur.prefixTreeIndex, state.Field[cy + dy[k], cx + dx[k]] - 'А']));
+                                                                  cur.newLetterUsed,
+                                                                  cur,
+                                                                  cx + dx[k],
+                                                                  cy + dy[k],
+                                                                  state.Field[cy + dy[k], cx + dx[k]] - 'А',
+                                                                  prefixTree[cur.prefixTreeIndex, state.Field[cy + dy[k], cx + dx[k]] - 'А']));
                                     }
                                 }
                                 catch (IndexOutOfRangeException)
@@ -349,6 +354,15 @@ namespace Balda
                             break;
                     }
                     optimalMove = possibleMoves[optimalIndex];
+                }
+                move = optimalMove.Pop();
+            }
+            else
+            {
+                move = optimalMove.Pop();
+                if (optimalMove.Count == 0)
+                {
+                    possibleMoves.Clear();
                 }
             }
             return;
