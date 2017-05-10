@@ -40,6 +40,7 @@ namespace Balda
             WordBase wb = new WordBase();
             foreach (string word in lines)
             {
+                
                 if (!word.Contains('-'))
                 {
                     wb.Add(word.ToUpper());

@@ -67,6 +67,7 @@ namespace Balda
             playerTypes[i].Items.Add("Средний ИИ");
             playerTypes[i].Items.Add("Сильный ИИ");
             playerTypes[i].SelectedText = "Реальный игрок";
+            playerTypes[i].SelectedIndex = 0;
             playerNames[i].Parent = this;
             playerTypes[i].Parent = this;
             playerNames[i].Show();
@@ -129,7 +130,7 @@ namespace Balda
 
             for (int i = 0; i < playerTypes.Length; ++i)
             {
-                if (playerTypes[i].SelectedText == "Реальный игрок")
+                if (playerTypes[i].SelectedIndex == 0)
                 {
                     string realPlayerName = playerNames[i].Text;
                     if (realPlayerName == "")
@@ -155,26 +156,32 @@ namespace Balda
                 }
                 else
                 {
-                    switch (playerTypes[i].SelectedText)
+                    switch (playerTypes[i].SelectedIndex)
                     {
-                        case "Сильный ИИ":
-                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Hard),
+                        case 3:
+                        {
+                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Hard, gamingForm),
                                         "Сильный ИИ " + computerPlayerNames[i],
                                         playerColors[i],
                                         0));
-                            break;
-                        case "Средний ИИ":
-                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Medium),
+                        }
+                        break;
+                        case 2:
+                        {
+                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Medium, gamingForm),
                                         "Средний ИИ " + computerPlayerNames[i],
                                         playerColors[i],
                                         0));
-                            break;
-                        case "Слабый ИИ":
-                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Easy),
+                        }
+                        break;
+                        case 1:
+                        {
+                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Easy, gamingForm),
                                         "Слабый ИИ " + computerPlayerNames[i],
                                         playerColors[i],
                                         0));
-                            break;
+                        }
+                        break;
                     }
                 }
             }

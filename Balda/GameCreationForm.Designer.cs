@@ -110,7 +110,7 @@
             this.textBoxStartWord.Name = "textBoxStartWord";
             this.textBoxStartWord.Size = new System.Drawing.Size(116, 22);
             this.textBoxStartWord.TabIndex = 5;
-            this.textBoxStartWord.Text = "АББАТ";
+            this.textBoxStartWord.Text = "НАНОС";
             this.textBoxStartWord.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxStartWord_KeyPress);
             // 
             // checkBoxAllowDiagonal
