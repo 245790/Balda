@@ -12,13 +12,15 @@ namespace Balda
         public Rules Rules { get; private set; }
         public List<Player> Players { get; private set; }
         private WordBase wordBase;
+        private GamingForm gamingForm;
 
-        public Game(string startWord, List<Player> players, Rules rules, WordBase wordBase)
+        public Game(string startWord, List<Player> players, Rules rules, WordBase wordBase, GamingForm gamingForm)
         {
             State = new FieldState(startWord);
             Rules = rules;
             Players = players;
             this.wordBase = wordBase;
+            this.gamingForm = gamingForm;
         }
 
         public SortedDictionary<int, Player> play() 
@@ -26,9 +28,10 @@ namespace Balda
             bool gameEnded = false;
             while (!gameEnded) 
             {
+                int i = 0;
                 foreach (Player player in Players) 
                 {
-                    processPlayer(player);
+                    processPlayer(player, i++);
                     gameEnded = winCondition();
                     if (gameEnded)
                     {
@@ -45,15 +48,17 @@ namespace Balda
 
         private bool winCondition()
         {
-            return true;            
+            return false;            
         }
 
-        private void processPlayer(Player player)
+        private void processPlayer(Player player, int currentIndex)
         {
             Move move = new Move();
             MessageBox.Show("Ходит игрок " + player.Name);
+            gamingForm.updatePlayersScore(Players, currentIndex);
             do
             {
+                gamingForm.updateForm(State, Rules);
                 player.Strategy.move(State, ref move, Rules);                
                 switch (move.Action)
                 {
@@ -169,7 +174,19 @@ namespace Balda
                             break;
                         }
 
+                        State.ProhibitedWords.Add(word);
 
+                        player.Score += word.Length;
+
+                        State.NewX = -1;
+                        State.NewY = -1;
+                        State.X.Clear();
+                        State.Y.Clear();
+
+                        ListViewItem item = new ListViewItem(word);
+                        item.ForeColor = player.PlayerColor;
+                        gamingForm.addNewWord(item);
+                        return;
                     }
                     break;
                 }

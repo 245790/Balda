@@ -12,7 +12,7 @@ namespace Balda
         public IStrategy Strategy { get; private set; }
         public string Name { get; private set; }
         public Color PlayerColor { get; private set; }
-        public int Score { get; private set; }
+        public int Score { get; set; }
 
         public Player(IStrategy strategy, string name, Color color, int score)
         {

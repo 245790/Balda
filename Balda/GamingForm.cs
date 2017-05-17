@@ -11,6 +11,8 @@ using System.Threading;
 namespace Balda
 {
     delegate void formUpdatingDelegate(FieldState f, Rules r);
+    delegate void wordAddingDelegate(ListViewItem item);
+    delegate void playersUpdatingDelegate(List<Player> players, int currentIndex);
 
     public partial class GamingForm : Form
     {
@@ -90,16 +92,19 @@ namespace Balda
                 // ↓ is needed to remove the scroll bar
                 fieldDataGridView.Rows[0].Height = fieldDataGridView.Size.Height / state.Field.GetLength(1) - 2;
                 int newX = state.NewX;
-                int newY = state.NewY; 
+                int newY = state.NewY;
+                textBoxWord.Text = "";
+                for (int i = 0; i < state.X.Count(); i++)
+                {
+                    textBoxWord.Text += fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Value;
+                }
                 if (newX != -1 && newY != -1)
                 {
                     // highlight the new letter
                     fieldDataGridView.Rows[newY].Cells[newX].Style.ForeColor = Color.Red;
-                    textBoxWord.Text = "";
                     for (int i = 0; i < state.X.Count(); i++)
                     {
                         fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Style.ForeColor = Color.Green;
-                        textBoxWord.Text += fieldDataGridView.Rows[state.Y[i]].Cells[state.X[i]].Value;
                     }
                 }
                 else
@@ -112,6 +117,7 @@ namespace Balda
                         for (int j = 0; j < state.Field.GetLength(1); ++j)
                         {
                             fieldDataGridView.Rows[i].Cells[j].ReadOnly = !availableCells[i, j];
+                            fieldDataGridView.Rows[i].Cells[j].Style.ForeColor = Color.Black;
                         }
                     }
                 }
@@ -170,6 +176,45 @@ namespace Balda
             this.humanMove.Action = ActionType.EndTurn;
             this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
             humanMoveMutex.ReleaseMutex();
+        }
+
+        public void addNewWord(ListViewItem item)
+        {
+
+            if (this.InvokeRequired)
+            {
+                wordAddingDelegate fud = new wordAddingDelegate(addNewWord);
+                this.Invoke(fud, new object[] { item });
+            }
+            else
+            {
+                listViewEnterWords.Items.Add(item);
+            }
+        }
+
+        public void updatePlayersScore(List<Player> players, int currentIndex)
+        {
+
+            if (this.InvokeRequired)
+            {
+                playersUpdatingDelegate fud = new playersUpdatingDelegate(updatePlayersScore);
+                this.Invoke(fud, new object[] { players, currentIndex });
+            }
+            else
+            {
+                listViewPlayers.Items.Clear();
+                for (int i = 0; i < players.Count; i++)
+                {
+                    ListViewItem item = new ListViewItem(players[i].Name + " " + players[i].Score.ToString());
+                    item.ForeColor = players[i].PlayerColor;
+                    item.Font = new System.Drawing.Font(item.Font, System.Drawing.FontStyle.Regular);
+                    if (i == currentIndex)
+                    {
+                        item.Font = new System.Drawing.Font(item.Font, System.Drawing.FontStyle.Bold);
+                    }
+                    listViewPlayers.Items.Add(item);
+                }
+            }
         }
     }
 }

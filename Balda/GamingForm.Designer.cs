@@ -33,6 +33,8 @@
             this.textBoxWord = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonEndTurn = new System.Windows.Forms.Button();
+            this.listViewEnterWords = new System.Windows.Forms.ListView();
+            this.listViewPlayers = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,12 +95,33 @@
             this.buttonEndTurn.UseVisualStyleBackColor = true;
             this.buttonEndTurn.Click += new System.EventHandler(this.buttonEndTurn_Click);
             // 
+            // listViewEnterWords
+            // 
+            this.listViewEnterWords.LabelWrap = false;
+            this.listViewEnterWords.Location = new System.Drawing.Point(12, 12);
+            this.listViewEnterWords.Name = "listViewEnterWords";
+            this.listViewEnterWords.Size = new System.Drawing.Size(121, 307);
+            this.listViewEnterWords.TabIndex = 5;
+            this.listViewEnterWords.UseCompatibleStateImageBehavior = false;
+            this.listViewEnterWords.View = System.Windows.Forms.View.List;
+            // 
+            // listViewPlayers
+            // 
+            this.listViewPlayers.Location = new System.Drawing.Point(501, 41);
+            this.listViewPlayers.Name = "listViewPlayers";
+            this.listViewPlayers.Size = new System.Drawing.Size(155, 278);
+            this.listViewPlayers.TabIndex = 5;
+            this.listViewPlayers.UseCompatibleStateImageBehavior = false;
+            this.listViewPlayers.View = System.Windows.Forms.View.List;
+            // 
             // GamingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 331);
             this.ControlBox = false;
+            this.Controls.Add(this.listViewPlayers);
+            this.Controls.Add(this.listViewEnterWords);
             this.Controls.Add(this.buttonEndTurn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxWord);
@@ -122,5 +145,7 @@
         private System.Windows.Forms.TextBox textBoxWord;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonEndTurn;
+        private System.Windows.Forms.ListView listViewEnterWords;
+        private System.Windows.Forms.ListView listViewPlayers;
     }
 }

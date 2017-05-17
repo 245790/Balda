@@ -12,7 +12,7 @@ namespace Balda
         public int NewY { get; set; }
         public List<int> X { get; set; }
         public List<int> Y { get; set; }
-        public List<string> ProhibitedWords { get; set; } // users canoot place words from this list
+        public HashSet<string> ProhibitedWords { get; set; } // users canoot place words from this list
 
         public FieldState (string startWord)
         {
@@ -32,7 +32,7 @@ namespace Balda
                     }                    
                 }
             }
-            ProhibitedWords = new List<string>();
+            ProhibitedWords = new HashSet<string>();
             ProhibitedWords.Add(startWord);
             X = new List<int>();
             Y = new List<int>();

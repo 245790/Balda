@@ -186,8 +186,7 @@ namespace Balda
 
         public void move(FieldState state, ref Move move, Rules rules)
         {
-            gamingForm.updateForm(state, rules);
-            System.Threading.Thread.Sleep(700);
+            System.Threading.Thread.Sleep(150);
             if (optimalMove.Count == 0) // this holds only on the first move of the iteration
             {
                 int nonDiagonalCounter = 0;
@@ -314,6 +313,10 @@ namespace Balda
                                     lol.Y = cur.y;
                                     newWord.Push((Move)lol.Clone());
                                     cur = cur.parent;
+                                }
+                                if (word == "ОСА")
+                                {
+                                    int q = 0;
                                 }
                                 lol.Action = ActionType.EnterLetter;
                                 lol.X = newLetter.x;
