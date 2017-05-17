@@ -11,12 +11,14 @@ namespace Balda
         public FieldState State { get;  private set; }
         public Rules Rules { get; private set; }
         public List<Player> Players { get; private set; }
+        private WordBase wordBase;
 
-        public Game(string startWord, List<Player> players, Rules rules)
+        public Game(string startWord, List<Player> players, Rules rules, WordBase wordBase)
         {
             State = new FieldState(startWord);
             Rules = rules;
             Players = players;
+            this.wordBase = wordBase;
         }
 
         public SortedDictionary<int, Player> play() 
@@ -49,6 +51,7 @@ namespace Balda
         private void processPlayer(Player player)
         {
             Move move = new Move();
+            MessageBox.Show("Ходит игрок " + player.Name);
             do
             {
                 player.Strategy.move(State, ref move, Rules);                
@@ -125,6 +128,50 @@ namespace Balda
                         }
                     }
                     break;
+                    case ActionType.EndTurn:
+                    {
+                        bool foundLetter = false;
+                        string word = "";
+                        //check if the word contains the newly enter letter
+                        for (int i = 0; i < State.X.Count; i++)
+                        {
+                            if (State.X[i] == State.NewX && State.Y[i] == State.NewY)
+                            {
+                                foundLetter = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!foundLetter)
+                        {
+                            resetTurn();
+                            break;
+                        }
+
+                        for (int i = 0; i < State.X.Count; i++)
+                        {
+                            int x = State.X[i];
+                            int y = State.Y[i];
+                            word += State.Field[y, x];
+                        }
+
+                        if (!wordBase.Contains(word))
+                        {
+                            MessageBox.Show(String.Format("База не содержит слова - {0}", word));
+                            resetTurn();
+                            break;
+                        }
+
+                        if (State.ProhibitedWords.Contains(word))
+                        {
+                            MessageBox.Show("Cлово " + word + " уже было");
+                            resetTurn();
+                            break;
+                        }
+
+
+                    }
+                    break;
                 }
             }
             while (move.Action != ActionType.EndTurn && move.Action != ActionType.PassTurn);
@@ -134,6 +181,12 @@ namespace Balda
         private bool isCapitalRussianLetter(Char letter)
         {
             return letter >= 'А' && letter <= 'Я';
+        }
+
+        private void resetTurn()
+        {
+            //it will be implemented in another story
+            throw new NotImplementedException();
         }
     }
 }
