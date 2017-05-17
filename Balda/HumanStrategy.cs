@@ -17,7 +17,6 @@ namespace Balda
 
         public void move(FieldState state, ref Move move, Rules rules)
         {
-            gamingForm.updateForm(state, rules);
             do
             {
                 move = gamingForm.HumanMove;
