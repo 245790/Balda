@@ -13,6 +13,7 @@ namespace Balda
         public List<Player> Players { get; private set; }
         private WordBase wordBase;
         private GamingForm gamingForm;
+        private int consequtiveTurnPasses;
 
         public Game(string startWord, List<Player> players, Rules rules, WordBase wordBase, GamingForm gamingForm)
         {
@@ -21,9 +22,10 @@ namespace Balda
             Players = players;
             this.wordBase = wordBase;
             this.gamingForm = gamingForm;
+            consequtiveTurnPasses = 0;
         }
 
-        public SortedDictionary<int, Player> play() 
+        public void play(ref List<KeyValuePair<int, Player>> result) 
         {
             bool gameEnded = false;
             while (!gameEnded) 
@@ -33,22 +35,51 @@ namespace Balda
                 {
                     processPlayer(player, i++);
                     gameEnded = winCondition();
+
                     if (gameEnded)
                     {
                         break;
                     }
                 }
-                // highlight the whole move
-                // wait 4 secs
+
             }
-            // form a dictionary of players, sorted by their game score
-            // return IT, not null!
-            return null;        
+
+            Players.Sort((p1, p2) => p2.Score - p1.Score);
+            result = new List<KeyValuePair<int, Player>>();
+            result.Add(new KeyValuePair<int, Player>(1, Players[0]));
+            for (int i = 1; i < Players.Count; i++)
+            {
+                if (Players[i].Score == Players[i - 1].Score)
+                {
+
+                    result.Add(new KeyValuePair<int, Player>(result.Last().Key, Players[i]));
+                }
+                else
+                {
+                    result.Add(new KeyValuePair<int, Player>(i + 1, Players[i]));
+                }
+            }
+            gamingForm.gameEnding();       
         }
 
         private bool winCondition()
         {
-            return false;            
+            if (consequtiveTurnPasses == Players.Count * 3)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < State.Field.GetLength(0); i++)
+            {
+                for (int j = 0; j < State.Field.GetLength(1); j++)
+                {
+                    if (State.Field[i, j] == '\0')
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;            
         }
 
         private void processPlayer(Player player, int currentIndex)
@@ -200,6 +231,7 @@ namespace Balda
                         ListViewItem item = new ListViewItem(word);
                         item.ForeColor = player.PlayerColor;
                         gamingForm.addNewWord(item);
+                        consequtiveTurnPasses = 0;
                         correctEndTurn = true;
                         return;
                     }
@@ -211,6 +243,7 @@ namespace Balda
                     break;
                     case ActionType.PassTurn:
                     {
+                        consequtiveTurnPasses++;
                         resetTurn();
                         return;
                     }

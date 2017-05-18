@@ -13,11 +13,13 @@ namespace Balda
     delegate void formUpdatingDelegate(FieldState f, Rules r);
     delegate void wordAddingDelegate(ListViewItem item);
     delegate void playersUpdatingDelegate(List<Player> players, int currentIndex);
+    delegate void gameEndingDelegate();
 
     public partial class GamingForm : Form
     {
         //the newest local copy of state from the game server
         FieldState state;
+        List<KeyValuePair<int, Player>> tableOfRecords;
         Mutex humanMoveMutex;
         Thread playingThread;
         private Move humanMove;
@@ -61,7 +63,7 @@ namespace Balda
         {
             // Thread playing = new Thread( new ThreadStart(play));
             //  playing.Start();
-            playingThread = new Thread(() => game.play());
+            playingThread = new Thread(() => game.play(ref tableOfRecords));
             playingThread.Start();
         }
 
@@ -233,6 +235,29 @@ namespace Balda
             this.humanMove.Action = ActionType.PassTurn;
             this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
             humanMoveMutex.ReleaseMutex();
+        }
+
+        public void gameEnding()
+        {
+
+            if (this.InvokeRequired)
+            {
+                gameEndingDelegate fud = new gameEndingDelegate(gameEnding);
+                this.Invoke(fud, new object[] { });
+            }
+            else
+            {
+                string stringOfRecords = "";
+                for (int i = 0; i < tableOfRecords.Count; i++)
+                {
+                    stringOfRecords += tableOfRecords[i].Key.ToString() + ". " + tableOfRecords[i].Value.Name + Environment.NewLine;
+                }
+                stringOfRecords.TrimEnd(new char[] {'\n'});
+                MessageBox.Show(stringOfRecords, "Турнирная таблица");
+                playingThread.Abort();
+                this.Owner.Show();
+                Close();
+            }
         }
     }
 }
