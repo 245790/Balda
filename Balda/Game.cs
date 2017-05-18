@@ -53,6 +53,7 @@ namespace Balda
 
         private void processPlayer(Player player, int currentIndex)
         {
+            bool correctEndTurn = false;
             Move move = new Move();
             MessageBox.Show("Ходит игрок " + player.Name);
             gamingForm.updatePlayersScore(Players, currentIndex);
@@ -138,6 +139,18 @@ namespace Balda
                         bool foundLetter = false;
                         string word = "";
                         //check if the word contains the newly enter letter
+                        if (State.NewX == -1 && State.NewY == -1)
+                        {
+                            MessageBox.Show("Введите букву");
+                            break;
+                        }
+
+                        if (State.X.Count == 0 && State.Y.Count == 0)
+                        {
+                            MessageBox.Show("Выберите слово");
+                            break;
+                        }
+
                         for (int i = 0; i < State.X.Count; i++)
                         {
                             if (State.X[i] == State.NewX && State.Y[i] == State.NewY)
@@ -149,6 +162,7 @@ namespace Balda
                         
                         if (!foundLetter)
                         {
+                            MessageBox.Show("Слово не содержит поставленную букву"); 
                             resetTurn();
                             break;
                         }
@@ -186,21 +200,24 @@ namespace Balda
                         ListViewItem item = new ListViewItem(word);
                         item.ForeColor = player.PlayerColor;
                         gamingForm.addNewWord(item);
+                        correctEndTurn = true;
                         return;
                     }
                     break;
                     case ActionType.Reset:
                     {
-                        State.Field[State.NewY, State.NewX] = '\0';
-                        State.NewX = -1;
-                        State.NewY = -1;
-                        State.X.Clear();
-                        State.Y.Clear();
+                        resetTurn();
+                    }
+                    break;
+                    case ActionType.PassTurn:
+                    {
+                        resetTurn();
+                        return;
                     }
                     break;
                 }
             }
-            while (move.Action != ActionType.EndTurn && move.Action != ActionType.PassTurn);
+            while (!((move.Action == ActionType.EndTurn && correctEndTurn == true) || move.Action == ActionType.PassTurn));
             // if the user chose non-existing word, we should ask him for another word instead of exitting
         }
 
@@ -211,8 +228,14 @@ namespace Balda
 
         private void resetTurn()
         {
-            //it will be implemented in another story
-            throw new NotImplementedException();
+            if (State.NewX != -1 && State.NewY != -1)
+            {
+                State.Field[State.NewY, State.NewX] = '\0';
+            }
+            State.NewX = -1;
+            State.NewY = -1;
+            State.X.Clear();
+            State.Y.Clear();
         }
     }
 }

@@ -225,5 +225,14 @@ namespace Balda
             this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
             humanMoveMutex.ReleaseMutex();
         }
+
+        private void buttonPassTurn_Click(object sender, EventArgs e)
+        {
+            humanMoveMutex.WaitOne();
+            this.humanMove = new Move();
+            this.humanMove.Action = ActionType.PassTurn;
+            this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
+            humanMoveMutex.ReleaseMutex();
+        }
     }
 }
