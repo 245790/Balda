@@ -125,7 +125,7 @@ namespace Balda
             List<string> realPlayerNames = new List<string>();
             List<Player> players = new List<Player>();
 
-            GamingForm gamingForm = new GamingForm();
+            GamingForm gamingForm = new GamingForm(users);
             gamingForm.Owner = this.Owner;
 
             for (int i = 0; i < playerTypes.Length; ++i)

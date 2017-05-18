@@ -13,11 +13,14 @@ namespace Balda
     delegate void formUpdatingDelegate(FieldState f, Rules r);
     delegate void wordAddingDelegate(ListViewItem item);
     delegate void playersUpdatingDelegate(List<Player> players, int currentIndex);
+    delegate void gameEndingDelegate();
 
     public partial class GamingForm : Form
     {
         //the newest local copy of state from the game server
         FieldState state;
+        List<KeyValuePair<int, Player>> tableOfRecords;
+        Dictionary<string, int> users;
         Mutex humanMoveMutex;
         Thread playingThread;
         private Move humanMove;
@@ -51,9 +54,10 @@ namespace Balda
             }
         }
 
-        public GamingForm()
+        public GamingForm(Dictionary<string, int> users)
         {
             humanMoveMutex = new Mutex();
+            this.users = users;
             InitializeComponent();
         }
 
@@ -61,7 +65,7 @@ namespace Balda
         {
             // Thread playing = new Thread( new ThreadStart(play));
             //  playing.Start();
-            playingThread = new Thread(() => game.play());
+            playingThread = new Thread(() => game.play(ref tableOfRecords));
             playingThread.Start();
         }
 
@@ -233,6 +237,48 @@ namespace Balda
             this.humanMove.Action = ActionType.PassTurn;
             this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
             humanMoveMutex.ReleaseMutex();
+        }
+
+        public void gameEnding()
+        {
+
+            if (this.InvokeRequired)
+            {
+                gameEndingDelegate fud = new gameEndingDelegate(gameEnding);
+                this.Invoke(fud, new object[] { });
+            }
+            else
+            {
+                string stringOfRecords = "";
+                bool isBot = false;
+                for (int i = 0; i < tableOfRecords.Count; i++)
+                {
+                    stringOfRecords += tableOfRecords[i].Key.ToString() + ". " + tableOfRecords[i].Value.Name + Environment.NewLine;
+                }
+                stringOfRecords.TrimEnd(new char[] {'\n'});
+                MessageBox.Show(stringOfRecords, "Турнирная таблица");
+
+                for (int i = 0; i < tableOfRecords.Count; i++)
+                {
+                    if (tableOfRecords[i].Value.Strategy.GetType() == typeof(ComputerStrategy))
+                    {
+                        isBot = true;
+                        break;
+                    }
+                }
+
+                if (!isBot)
+                {
+                    for (int i = 0; i < tableOfRecords.Count; i++)
+                    {
+                        users[tableOfRecords[i].Value.Name] += tableOfRecords[i].Value.Score;
+                    }
+                }
+
+                playingThread.Abort();
+                this.Owner.Show();
+                Close();
+            }
         }
     }
 }
