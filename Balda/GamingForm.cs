@@ -20,6 +20,7 @@ namespace Balda
         //the newest local copy of state from the game server
         FieldState state;
         List<KeyValuePair<int, Player>> tableOfRecords;
+        Dictionary<string, int> users;
         Mutex humanMoveMutex;
         Thread playingThread;
         private Move humanMove;
@@ -53,9 +54,10 @@ namespace Balda
             }
         }
 
-        public GamingForm()
+        public GamingForm(Dictionary<string, int> users)
         {
             humanMoveMutex = new Mutex();
+            this.users = users;
             InitializeComponent();
         }
 
@@ -248,12 +250,31 @@ namespace Balda
             else
             {
                 string stringOfRecords = "";
+                bool isBot = false;
                 for (int i = 0; i < tableOfRecords.Count; i++)
                 {
                     stringOfRecords += tableOfRecords[i].Key.ToString() + ". " + tableOfRecords[i].Value.Name + Environment.NewLine;
                 }
                 stringOfRecords.TrimEnd(new char[] {'\n'});
                 MessageBox.Show(stringOfRecords, "Турнирная таблица");
+
+                for (int i = 0; i < tableOfRecords.Count; i++)
+                {
+                    if (tableOfRecords[i].Value.Strategy.GetType() == typeof(ComputerStrategy))
+                    {
+                        isBot = true;
+                        break;
+                    }
+                }
+
+                if (!isBot)
+                {
+                    for (int i = 0; i < tableOfRecords.Count; i++)
+                    {
+                        users[tableOfRecords[i].Value.Name] += tableOfRecords[i].Value.Score;
+                    }
+                }
+
                 playingThread.Abort();
                 this.Owner.Show();
                 Close();
