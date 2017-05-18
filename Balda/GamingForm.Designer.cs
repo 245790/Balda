@@ -36,6 +36,7 @@
             this.listViewEnterWords = new System.Windows.Forms.ListView();
             this.listViewPlayers = new System.Windows.Forms.ListView();
             this.buttonResetTurn = new System.Windows.Forms.Button();
+            this.buttonPassTurn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +62,7 @@
             // 
             // buttonShowMainForm
             // 
-            this.buttonShowMainForm.Location = new System.Drawing.Point(12, 12);
+            this.buttonShowMainForm.Location = new System.Drawing.Point(501, 12);
             this.buttonShowMainForm.Name = "buttonShowMainForm";
             this.buttonShowMainForm.Size = new System.Drawing.Size(155, 23);
             this.buttonShowMainForm.TabIndex = 1;
@@ -125,12 +126,23 @@
             this.buttonResetTurn.UseVisualStyleBackColor = true;
             this.buttonResetTurn.Click += new System.EventHandler(this.buttonResetTurn_Click);
             // 
+            // buttonPassTurn
+            // 
+            this.buttonPassTurn.Location = new System.Drawing.Point(258, 308);
+            this.buttonPassTurn.Name = "buttonPassTurn";
+            this.buttonPassTurn.Size = new System.Drawing.Size(155, 23);
+            this.buttonPassTurn.TabIndex = 8;
+            this.buttonPassTurn.Text = "Пропустить ход";
+            this.buttonPassTurn.UseVisualStyleBackColor = true;
+            this.buttonPassTurn.Click += new System.EventHandler(this.buttonPassTurn_Click);
+            // 
             // GamingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 366);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonPassTurn);
             this.Controls.Add(this.buttonResetTurn);
             this.Controls.Add(this.listViewPlayers);
             this.Controls.Add(this.listViewEnterWords);
@@ -160,5 +172,6 @@
         private System.Windows.Forms.ListView listViewEnterWords;
         private System.Windows.Forms.ListView listViewPlayers;
         private System.Windows.Forms.Button buttonResetTurn;
+        private System.Windows.Forms.Button buttonPassTurn;
     }
 }
