@@ -216,5 +216,14 @@ namespace Balda
                 }
             }
         }
+
+        private void buttonResetTurn_Click(object sender, EventArgs e)
+        {
+            humanMoveMutex.WaitOne();
+            this.humanMove = new Move();
+            this.humanMove.Action = ActionType.Reset;
+            this.humanMove.Letter = ' ';// when it was \0 toString didn't work properly;
+            humanMoveMutex.ReleaseMutex();
+        }
     }
 }

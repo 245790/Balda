@@ -189,6 +189,15 @@ namespace Balda
                         return;
                     }
                     break;
+                    case ActionType.Reset:
+                    {
+                        State.Field[State.NewY, State.NewX] = '\0';
+                        State.NewX = -1;
+                        State.NewY = -1;
+                        State.X.Clear();
+                        State.Y.Clear();
+                    }
+                    break;
                 }
             }
             while (move.Action != ActionType.EndTurn && move.Action != ActionType.PassTurn);

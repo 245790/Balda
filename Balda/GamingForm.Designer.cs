@@ -35,6 +35,7 @@
             this.buttonEndTurn = new System.Windows.Forms.Button();
             this.listViewEnterWords = new System.Windows.Forms.ListView();
             this.listViewPlayers = new System.Windows.Forms.ListView();
+            this.buttonResetTurn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@
             this.fieldDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.fieldDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.fieldDataGridView.ColumnHeadersVisible = false;
-            this.fieldDataGridView.Location = new System.Drawing.Point(212, 12);
+            this.fieldDataGridView.Location = new System.Drawing.Point(235, 42);
             this.fieldDataGridView.MultiSelect = false;
             this.fieldDataGridView.Name = "fieldDataGridView";
             this.fieldDataGridView.RowHeadersVisible = false;
@@ -60,7 +61,7 @@
             // 
             // buttonShowMainForm
             // 
-            this.buttonShowMainForm.Location = new System.Drawing.Point(501, 12);
+            this.buttonShowMainForm.Location = new System.Drawing.Point(12, 12);
             this.buttonShowMainForm.Name = "buttonShowMainForm";
             this.buttonShowMainForm.Size = new System.Drawing.Size(155, 23);
             this.buttonShowMainForm.TabIndex = 1;
@@ -70,7 +71,7 @@
             // 
             // textBoxWord
             // 
-            this.textBoxWord.Location = new System.Drawing.Point(285, 231);
+            this.textBoxWord.Location = new System.Drawing.Point(308, 252);
             this.textBoxWord.Name = "textBoxWord";
             this.textBoxWord.ReadOnly = true;
             this.textBoxWord.Size = new System.Drawing.Size(127, 20);
@@ -79,7 +80,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(209, 234);
+            this.label1.Location = new System.Drawing.Point(232, 255);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 3;
@@ -87,9 +88,9 @@
             // 
             // buttonEndTurn
             // 
-            this.buttonEndTurn.Location = new System.Drawing.Point(256, 296);
+            this.buttonEndTurn.Location = new System.Drawing.Point(258, 336);
             this.buttonEndTurn.Name = "buttonEndTurn";
-            this.buttonEndTurn.Size = new System.Drawing.Size(113, 23);
+            this.buttonEndTurn.Size = new System.Drawing.Size(155, 23);
             this.buttonEndTurn.TabIndex = 4;
             this.buttonEndTurn.Text = "Закончить ход";
             this.buttonEndTurn.UseVisualStyleBackColor = true;
@@ -98,28 +99,39 @@
             // listViewEnterWords
             // 
             this.listViewEnterWords.LabelWrap = false;
-            this.listViewEnterWords.Location = new System.Drawing.Point(12, 12);
+            this.listViewEnterWords.Location = new System.Drawing.Point(12, 42);
             this.listViewEnterWords.Name = "listViewEnterWords";
-            this.listViewEnterWords.Size = new System.Drawing.Size(121, 307);
+            this.listViewEnterWords.Size = new System.Drawing.Size(155, 317);
             this.listViewEnterWords.TabIndex = 5;
             this.listViewEnterWords.UseCompatibleStateImageBehavior = false;
             this.listViewEnterWords.View = System.Windows.Forms.View.List;
             // 
             // listViewPlayers
             // 
-            this.listViewPlayers.Location = new System.Drawing.Point(501, 41);
+            this.listViewPlayers.Location = new System.Drawing.Point(501, 42);
             this.listViewPlayers.Name = "listViewPlayers";
-            this.listViewPlayers.Size = new System.Drawing.Size(155, 278);
+            this.listViewPlayers.Size = new System.Drawing.Size(155, 317);
             this.listViewPlayers.TabIndex = 5;
             this.listViewPlayers.UseCompatibleStateImageBehavior = false;
             this.listViewPlayers.View = System.Windows.Forms.View.List;
+            // 
+            // buttonResetTurn
+            // 
+            this.buttonResetTurn.Location = new System.Drawing.Point(258, 278);
+            this.buttonResetTurn.Name = "buttonResetTurn";
+            this.buttonResetTurn.Size = new System.Drawing.Size(155, 23);
+            this.buttonResetTurn.TabIndex = 7;
+            this.buttonResetTurn.Text = "Вернуться к началу хода";
+            this.buttonResetTurn.UseVisualStyleBackColor = true;
+            this.buttonResetTurn.Click += new System.EventHandler(this.buttonResetTurn_Click);
             // 
             // GamingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 331);
+            this.ClientSize = new System.Drawing.Size(668, 366);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonResetTurn);
             this.Controls.Add(this.listViewPlayers);
             this.Controls.Add(this.listViewEnterWords);
             this.Controls.Add(this.buttonEndTurn);
@@ -147,5 +159,6 @@
         private System.Windows.Forms.Button buttonEndTurn;
         private System.Windows.Forms.ListView listViewEnterWords;
         private System.Windows.Forms.ListView listViewPlayers;
+        private System.Windows.Forms.Button buttonResetTurn;
     }
 }
