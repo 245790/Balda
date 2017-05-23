@@ -14,6 +14,7 @@ namespace Balda
     delegate void wordAddingDelegate(ListViewItem item);
     delegate void playersUpdatingDelegate(List<Player> players, int currentIndex);
     delegate void gameEndingDelegate();
+    delegate void formTimeUpdatingDelegate(TimeSpan time);
 
     public partial class GamingForm : Form
     {
@@ -28,6 +29,12 @@ namespace Balda
         {
             get
             {
+                if (game.timeIsUp == true)
+                {
+                    Move timeOutMove = new Move();
+                    timeOutMove.Action = ActionType.PassTurn;
+                    return timeOutMove; 
+                }
                 humanMoveMutex.WaitOne();
                 if (humanMove == null)
                 {
@@ -69,9 +76,22 @@ namespace Balda
             playingThread.Start();
         }
 
+        public void updateTimer(TimeSpan time)
+        {
+            if (this.InvokeRequired)
+            {
+                formTimeUpdatingDelegate fud = new formTimeUpdatingDelegate(updateTimer);
+                this.Invoke(fud, new object[] { time });
+            }
+            else
+            {
+                labelTimer.Text = time.ToString(@"mm\:ss");
+            }
+        }
+
         public void updateForm(FieldState state, Rules rules)
         {
-            
+
             if (this.InvokeRequired)
             {
                 formUpdatingDelegate fud = new formUpdatingDelegate(updateForm);
@@ -130,6 +150,7 @@ namespace Balda
 
         private void buttonShowMainForm_Click(object sender, EventArgs e)
         {
+            game.secondsTimer.Change(Timeout.Infinite, Timeout.Infinite);
             playingThread.Abort();
             this.Owner.Show();
             Close();
@@ -170,7 +191,7 @@ namespace Balda
                 this.humanMove.Y = rowIdx;
                 humanMoveMutex.ReleaseMutex();
             }
-            
+
         }
 
         private void buttonEndTurn_Click(object sender, EventArgs e)
@@ -255,7 +276,7 @@ namespace Balda
                 {
                     stringOfRecords += tableOfRecords[i].Key.ToString() + ". " + tableOfRecords[i].Value.Name + Environment.NewLine;
                 }
-                stringOfRecords.TrimEnd(new char[] {'\n'});
+                stringOfRecords.TrimEnd(new char[] { '\n' });
                 MessageBox.Show(stringOfRecords, "Турнирная таблица");
 
                 for (int i = 0; i < tableOfRecords.Count; i++)
