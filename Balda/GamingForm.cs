@@ -290,9 +290,10 @@ namespace Balda
 
                 if (!isBot)
                 {
-                    for (int i = 0; i < tableOfRecords.Count; i++)
+                    users[tableOfRecords[0].Value.Name] += tableOfRecords.Count  - 1;
+                    for (int i = 1; i < tableOfRecords.Count; i++)
                     {
-                        users[tableOfRecords[i].Value.Name] += tableOfRecords[i].Value.Score;
+                        users[tableOfRecords[i].Value.Name] -= tableOfRecords.Count - 1;
                     }
                 }
 

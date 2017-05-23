@@ -53,6 +53,7 @@
             this.recordsButton.TabIndex = 1;
             this.recordsButton.Text = "Таблица рекордов";
             this.recordsButton.UseVisualStyleBackColor = true;
+            this.recordsButton.Click += new System.EventHandler(this.recordsButton_Click);
             // 
             // exitButton
             // 
