@@ -36,7 +36,10 @@
             this.textBoxStartWord = new System.Windows.Forms.TextBox();
             this.checkBoxAllowDiagonal = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowIntersections = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDownTimeLimit = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlayersCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeLimit)).BeginInit();
             this.SuspendLayout();
             // 
             // labelHowManyPlayers
@@ -85,9 +88,9 @@
             // 
             // buttonCreateGame
             // 
-            this.buttonCreateGame.Location = new System.Drawing.Point(462, 348);
+            this.buttonCreateGame.Location = new System.Drawing.Point(462, 377);
             this.buttonCreateGame.Name = "buttonCreateGame";
-            this.buttonCreateGame.Size = new System.Drawing.Size(120, 23);
+            this.buttonCreateGame.Size = new System.Drawing.Size(120, 32);
             this.buttonCreateGame.TabIndex = 3;
             this.buttonCreateGame.Text = "Создать игру";
             this.buttonCreateGame.UseVisualStyleBackColor = true;
@@ -133,12 +136,35 @@
             this.checkBoxAllowIntersections.Text = "Пересекать слово само собой";
             this.checkBoxAllowIntersections.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 322);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(234, 16);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Задать лимит времени (в минутах)";
+            // 
+            // numericUpDownTimeLimit
+            // 
+            this.numericUpDownTimeLimit.Location = new System.Drawing.Point(12, 345);
+            this.numericUpDownTimeLimit.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.numericUpDownTimeLimit.Name = "numericUpDownTimeLimit";
+            this.numericUpDownTimeLimit.Size = new System.Drawing.Size(120, 22);
+            this.numericUpDownTimeLimit.TabIndex = 9;
+            // 
             // GameCreationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(594, 383);
+            this.ClientSize = new System.Drawing.Size(594, 421);
             this.ControlBox = false;
+            this.Controls.Add(this.numericUpDownTimeLimit);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBoxAllowIntersections);
             this.Controls.Add(this.checkBoxAllowDiagonal);
             this.Controls.Add(this.textBoxStartWord);
@@ -154,6 +180,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Создание игры";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlayersCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeLimit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,5 +196,7 @@
         private System.Windows.Forms.TextBox textBoxStartWord;
         private System.Windows.Forms.CheckBox checkBoxAllowDiagonal;
         private System.Windows.Forms.CheckBox checkBoxAllowIntersections;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDownTimeLimit;
     }
 }

@@ -159,29 +159,29 @@ namespace Balda
                     switch (playerTypes[i].SelectedIndex)
                     {
                         case 3:
-                        {
-                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Hard, gamingForm),
-                                        "Сильный ИИ " + computerPlayerNames[i],
-                                        playerColors[i],
-                                        0));
-                        }
-                        break;
+                            {
+                                players.Add(new Player(new ComputerStrategy(StrategyStrength.Hard, gamingForm),
+                                            "Сильный ИИ " + computerPlayerNames[i],
+                                            playerColors[i],
+                                            0));
+                            }
+                            break;
                         case 2:
-                        {
-                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Medium, gamingForm),
-                                        "Средний ИИ " + computerPlayerNames[i],
-                                        playerColors[i],
-                                        0));
-                        }
-                        break;
+                            {
+                                players.Add(new Player(new ComputerStrategy(StrategyStrength.Medium, gamingForm),
+                                            "Средний ИИ " + computerPlayerNames[i],
+                                            playerColors[i],
+                                            0));
+                            }
+                            break;
                         case 1:
-                        {
-                            players.Add(new Player(new ComputerStrategy(StrategyStrength.Easy, gamingForm),
-                                        "Слабый ИИ " + computerPlayerNames[i],
-                                        playerColors[i],
-                                        0));
-                        }
-                        break;
+                            {
+                                players.Add(new Player(new ComputerStrategy(StrategyStrength.Easy, gamingForm),
+                                            "Слабый ИИ " + computerPlayerNames[i],
+                                            playerColors[i],
+                                            0));
+                            }
+                            break;
                     }
                 }
             }
@@ -196,6 +196,11 @@ namespace Balda
             Rules rules = new Rules();
             rules.AllowDiagonal = checkBoxAllowDiagonal.Checked;
             rules.AllowIntersections = checkBoxAllowIntersections.Checked;
+            if ((int)numericUpDownTimeLimit.Value != 0)
+            {
+                rules.HasTimeLimit = true;
+                rules.TimeLimit = (int)numericUpDownTimeLimit.Value;
+            }
             Game game = new Game(startWord, players, rules, wordBase, gamingForm);
             gamingForm.Game = game;
             gamingForm.Show();

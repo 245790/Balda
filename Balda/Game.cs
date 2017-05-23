@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Timers;
 
 namespace Balda
 {
     public class Game
     {
-        public FieldState State { get;  private set; }
+        public FieldState State { get; private set; }
         public Rules Rules { get; private set; }
         public List<Player> Players { get; private set; }
         private WordBase wordBase;
         private GamingForm gamingForm;
         private int consequtiveTurnPasses;
+        public bool timeIsUp = false;
+        public TimeSpan time;
+        TimerCallback secondsTimerCB;
+        TimerCallback fullTimeTimerCB;
+        System.Threading.Timer fullTimeTimer;
+        public System.Threading.Timer secondsTimer;
 
         public Game(string startWord, List<Player> players, Rules rules, WordBase wordBase, GamingForm gamingForm)
         {
@@ -23,15 +32,22 @@ namespace Balda
             this.wordBase = wordBase;
             this.gamingForm = gamingForm;
             consequtiveTurnPasses = 0;
+            secondsTimerCB = new TimerCallback(timerTick);
+            //fullTimeTimerCB = new TimerCallback(timeOut);
+            if (Rules.HasTimeLimit == true)
+            {
+                // fullTimeTimer = new System.Threading.Timer(fullTimeTimerCB, null, 3000, -1);
+                secondsTimer = new System.Threading.Timer(secondsTimerCB, null, 1000, 1000);
+            }
         }
 
-        public void play(ref List<KeyValuePair<int, Player>> result) 
+        public void play(ref List<KeyValuePair<int, Player>> result)
         {
             bool gameEnded = false;
-            while (!gameEnded) 
+            while (!gameEnded)
             {
                 int i = 0;
-                foreach (Player player in Players) 
+                foreach (Player player in Players)
                 {
                     processPlayer(player, i++);
                     gameEnded = winCondition();
@@ -59,7 +75,8 @@ namespace Balda
                     result.Add(new KeyValuePair<int, Player>(i + 1, Players[i]));
                 }
             }
-            gamingForm.gameEnding();       
+            secondsTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            gamingForm.gameEnding();
         }
 
         private bool winCondition()
@@ -79,175 +96,206 @@ namespace Balda
                     }
                 }
             }
-            return true;            
+            return true;
+        }
+
+        /*void timeOut(object state)
+        {
+            timeIsUp = true;
+        }*/
+        void timerTick(object state)
+        {
+            if (timeIsUp == false) 
+            {
+                time = time.Subtract(new TimeSpan(0, 0, 1));
+                gamingForm.updateTimer(time);
+            }            
+            System.Diagnostics.Debug.WriteLine(time.ToString());            
+            if (time == TimeSpan.Zero)
+            {
+                timeIsUp = true;
+            }
         }
 
         private void processPlayer(Player player, int currentIndex)
         {
+            timeIsUp = false;
             bool correctEndTurn = false;
             Move move = new Move();
+            //time = new TimeSpan(0, Rules.TimeLimit, 0);
+            time = new TimeSpan(0, 0, 3);
+            gamingForm.updateTimer(time);
             MessageBox.Show("Ходит игрок " + player.Name);
             gamingForm.updatePlayersScore(Players, currentIndex);
+           
             do
             {
-                gamingForm.updateForm(State, Rules);
-                player.Strategy.move(State, ref move, Rules);                
+                if (timeIsUp == false)
+                {
+                    gamingForm.updateForm(State, Rules);
+                    player.Strategy.move(State, ref move, Rules);
+                }
+                else
+                {
+                    move.Action = ActionType.PassTurn;
+                    
+                }
                 switch (move.Action)
                 {
                     case ActionType.EnterLetter:
-                    {
-                        int x = move.X, y = move.Y;
-                        int width = State.Field.GetLength(0);
-                        if (x < 0 || x >= width || y < 0 || y >= width)
                         {
-                            // indices out of range
-                            break;
-                        }
-                        move.Letter = Char.ToUpper(move.Letter);
-                        if (!isCapitalRussianLetter(move.Letter))
-                        {
-                            // incorrect character
-                            break;
-                        }
-                        if (State.NewX != -1 && State.NewY != -1)
-                        {
-                            // user already entered new letter
-                            break;
-                        }
-                        State.NewX = x;
-                        State.NewY = y;
-                        State.Field[y, x] = move.Letter;
-                    }
-                    break;
-                    case ActionType.SelectLetter:
-                    {
-                        int wordLength = State.X.Count; 
-                        int x = move.X, y = move.Y;
-                        bool isCorrect = true;
-                        int width = State.Field.GetLength(0);
-                        if (x < 0 || x >= width || y < 0 || y >= width)
-                        {
-                            // indices out of range
-                            break;
-                        }
-                        char nullLetter = '\0';
-                        if (State.Field[y, x] == nullLetter)
-                        {//user must select only letters;
-                            break;
-                        }
-                        if (wordLength == 0)
-                        {
-                            State.X.Add(x);
-                            State.Y.Add(y);
-                            break;
-                        }
-                        if (!Rules.AllowIntersections)
-                        {
-                            for (int i = 0; i < wordLength; i++)
+                            int x = move.X, y = move.Y;
+                            int width = State.Field.GetLength(0);
+                            if (x < 0 || x >= width || y < 0 || y >= width)
                             {
-                                if (State.X[i] == x && State.Y[i] == y)
-                                {
-                                    //new coordinate intersects with the word
-                                    isCorrect = false;
-                                    break;
-                                }
+                                // indices out of range
+                                break;
                             }
-                            if (!isCorrect) break;
-                        }
-                        if (Rules.isNeighbours(x, y, State.X[wordLength-1], State.Y[wordLength-1]))
-                        {
-                            State.X.Add(x);
-                            State.Y.Add(y);
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    break;
-                    case ActionType.EndTurn:
-                    {
-                        bool foundLetter = false;
-                        string word = "";
-                        //check if the word contains the newly enter letter
-                        if (State.NewX == -1 && State.NewY == -1)
-                        {
-                            MessageBox.Show("Введите букву");
-                            break;
-                        }
-
-                        if (State.X.Count == 0 && State.Y.Count == 0)
-                        {
-                            MessageBox.Show("Выберите слово");
-                            break;
-                        }
-
-                        for (int i = 0; i < State.X.Count; i++)
-                        {
-                            if (State.X[i] == State.NewX && State.Y[i] == State.NewY)
+                            move.Letter = Char.ToUpper(move.Letter);
+                            if (!isCapitalRussianLetter(move.Letter))
                             {
-                                foundLetter = true;
+                                // incorrect character
+                                break;
+                            }
+                            if (State.NewX != -1 && State.NewY != -1)
+                            {
+                                // user already entered new letter
+                                break;
+                            }
+                            State.NewX = x;
+                            State.NewY = y;
+                            State.Field[y, x] = move.Letter;
+                        }
+                        break;
+                    case ActionType.SelectLetter:
+                        {
+                            int wordLength = State.X.Count;
+                            int x = move.X, y = move.Y;
+                            bool isCorrect = true;
+                            int width = State.Field.GetLength(0);
+                            if (x < 0 || x >= width || y < 0 || y >= width)
+                            {
+                                // indices out of range
+                                break;
+                            }
+                            char nullLetter = '\0';
+                            if (State.Field[y, x] == nullLetter)
+                            {//user must select only letters;
+                                break;
+                            }
+                            if (wordLength == 0)
+                            {
+                                State.X.Add(x);
+                                State.Y.Add(y);
+                                break;
+                            }
+                            if (!Rules.AllowIntersections)
+                            {
+                                for (int i = 0; i < wordLength; i++)
+                                {
+                                    if (State.X[i] == x && State.Y[i] == y)
+                                    {
+                                        //new coordinate intersects with the word
+                                        isCorrect = false;
+                                        break;
+                                    }
+                                }
+                                if (!isCorrect) break;
+                            }
+                            if (Rules.isNeighbours(x, y, State.X[wordLength - 1], State.Y[wordLength - 1]))
+                            {
+                                State.X.Add(x);
+                                State.Y.Add(y);
+                            }
+                            else
+                            {
                                 break;
                             }
                         }
-                        
-                        if (!foundLetter)
+                        break;
+                    case ActionType.EndTurn:
                         {
-                            MessageBox.Show("Слово не содержит поставленную букву"); 
-                            resetTurn();
-                            break;
+                            bool foundLetter = false;
+                            string word = "";
+                            //check if the word contains the newly enter letter
+                            if (State.NewX == -1 && State.NewY == -1)
+                            {
+                                MessageBox.Show("Введите букву");
+                                break;
+                            }
+
+                            if (State.X.Count == 0 && State.Y.Count == 0)
+                            {
+                                MessageBox.Show("Выберите слово");
+                                break;
+                            }
+
+                            for (int i = 0; i < State.X.Count; i++)
+                            {
+                                if (State.X[i] == State.NewX && State.Y[i] == State.NewY)
+                                {
+                                    foundLetter = true;
+                                    break;
+                                }
+                            }
+
+                            if (!foundLetter)
+                            {
+                                MessageBox.Show("Слово не содержит поставленную букву");
+                                resetTurn();
+                                break;
+                            }
+
+                            for (int i = 0; i < State.X.Count; i++)
+                            {
+                                int x = State.X[i];
+                                int y = State.Y[i];
+                                word += State.Field[y, x];
+                            }
+
+                            if (!wordBase.Contains(word))
+                            {
+                                MessageBox.Show(String.Format("База не содержит слова - {0}", word));
+                                resetTurn();
+                                break;
+                            }
+
+                            if (State.ProhibitedWords.Contains(word))
+                            {
+                                MessageBox.Show("Cлово " + word + " уже было");
+                                resetTurn();
+                                break;
+                            }
+
+                            State.ProhibitedWords.Add(word);
+
+                            player.Score += word.Length;
+
+                            State.NewX = -1;
+                            State.NewY = -1;
+                            State.X.Clear();
+                            State.Y.Clear();
+
+                            ListViewItem item = new ListViewItem(word);
+                            item.ForeColor = player.PlayerColor;
+                            gamingForm.addNewWord(item);
+                            consequtiveTurnPasses = 0;
+                            correctEndTurn = true;
+                            return;
                         }
-
-                        for (int i = 0; i < State.X.Count; i++)
-                        {
-                            int x = State.X[i];
-                            int y = State.Y[i];
-                            word += State.Field[y, x];
-                        }
-
-                        if (!wordBase.Contains(word))
-                        {
-                            MessageBox.Show(String.Format("База не содержит слова - {0}", word));
-                            resetTurn();
-                            break;
-                        }
-
-                        if (State.ProhibitedWords.Contains(word))
-                        {
-                            MessageBox.Show("Cлово " + word + " уже было");
-                            resetTurn();
-                            break;
-                        }
-
-                        State.ProhibitedWords.Add(word);
-
-                        player.Score += word.Length;
-
-                        State.NewX = -1;
-                        State.NewY = -1;
-                        State.X.Clear();
-                        State.Y.Clear();
-
-                        ListViewItem item = new ListViewItem(word);
-                        item.ForeColor = player.PlayerColor;
-                        gamingForm.addNewWord(item);
-                        consequtiveTurnPasses = 0;
-                        correctEndTurn = true;
-                        return;
-                    }
-                    break;
+                        break;
                     case ActionType.Reset:
-                    {
-                        resetTurn();
-                    }
-                    break;
+                        {
+                            resetTurn();
+                        }
+                        break;
                     case ActionType.PassTurn:
-                    {
-                        consequtiveTurnPasses++;
-                        resetTurn();
-                        return;
-                    }
-                    break;
+                        {
+                            consequtiveTurnPasses++;
+                            resetTurn();
+                            return;
+                        }
+                        break;
                 }
             }
             while (!((move.Action == ActionType.EndTurn && correctEndTurn == true) || move.Action == ActionType.PassTurn));
