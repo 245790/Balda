@@ -201,6 +201,7 @@ namespace Balda
                 rules.HasTimeLimit = true;
                 rules.TimeLimit = (int)numericUpDownTimeLimit.Value;
             }
+            rules.AllowRepeats = checkBoxAllowRepeats.Checked;
             Game game = new Game(startWord, players, rules, wordBase, gamingForm);
             gamingForm.Game = game;
             gamingForm.Show();

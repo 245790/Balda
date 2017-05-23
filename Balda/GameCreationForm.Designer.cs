@@ -38,6 +38,7 @@
             this.checkBoxAllowIntersections = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDownTimeLimit = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxAllowRepeats = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPlayersCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeLimit)).BeginInit();
             this.SuspendLayout();
@@ -157,12 +158,25 @@
             this.numericUpDownTimeLimit.Size = new System.Drawing.Size(120, 22);
             this.numericUpDownTimeLimit.TabIndex = 9;
             // 
+            // checkBoxAllowRepeats
+            // 
+            this.checkBoxAllowRepeats.AutoSize = true;
+            this.checkBoxAllowRepeats.Checked = true;
+            this.checkBoxAllowRepeats.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxAllowRepeats.Location = new System.Drawing.Point(12, 295);
+            this.checkBoxAllowRepeats.Name = "checkBoxAllowRepeats";
+            this.checkBoxAllowRepeats.Size = new System.Drawing.Size(430, 20);
+            this.checkBoxAllowRepeats.TabIndex = 10;
+            this.checkBoxAllowRepeats.Text = "Можно ли ставить слова, которые сами составились на поле?";
+            this.checkBoxAllowRepeats.UseVisualStyleBackColor = true;
+            // 
             // GameCreationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(594, 421);
             this.ControlBox = false;
+            this.Controls.Add(this.checkBoxAllowRepeats);
             this.Controls.Add(this.numericUpDownTimeLimit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.checkBoxAllowIntersections);
@@ -198,5 +212,6 @@
         private System.Windows.Forms.CheckBox checkBoxAllowIntersections;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDownTimeLimit;
+        private System.Windows.Forms.CheckBox checkBoxAllowRepeats;
     }
 }

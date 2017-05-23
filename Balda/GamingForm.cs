@@ -85,7 +85,14 @@ namespace Balda
             }
             else
             {
-                labelTimer.Text = time.ToString(@"mm\:ss");
+                if (game.Rules.HasTimeLimit)
+                {
+                    labelTimer.Text = time.ToString(@"mm\:ss");
+                }
+                else
+                {
+                    labelTimer.Text = "";
+                }
             }
         }
 
@@ -150,7 +157,10 @@ namespace Balda
 
         private void buttonShowMainForm_Click(object sender, EventArgs e)
         {
-            game.secondsTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            if (game.Rules.HasTimeLimit == true)
+            {
+                game.secondsTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            }
             playingThread.Abort();
             this.Owner.Show();
             Close();
