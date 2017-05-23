@@ -27,3 +27,4 @@ C:\Users\Денис\Desktop\balda — копия (2)\Balda\obj\x86\Debug\Balda.G
 C:\Users\Денис\Desktop\balda — копия (2)\Balda\obj\x86\Debug\Balda.GamingForm.resources
 C:\Users\Денис\Desktop\balda — копия (2)\Balda\obj\x86\Debug\Balda.Properties.Resources.resources
 C:\Users\Денис\Desktop\balda — копия (2)\Balda\obj\x86\Debug\Balda.csproj.GenerateResource.Cache
+C:\Users\Денис\Desktop\balda\Balda\obj\x86\Debug\Balda.RatingForm.resources

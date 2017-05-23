@@ -20,8 +20,6 @@ namespace Balda
         public bool timeIsUp = false;
         public TimeSpan time;
         TimerCallback secondsTimerCB;
-        TimerCallback fullTimeTimerCB;
-        System.Threading.Timer fullTimeTimer;
         public System.Threading.Timer secondsTimer;
 
         public Game(string startWord, List<Player> players, Rules rules, WordBase wordBase, GamingForm gamingForm)
@@ -33,10 +31,8 @@ namespace Balda
             this.gamingForm = gamingForm;
             consequtiveTurnPasses = 0;
             secondsTimerCB = new TimerCallback(timerTick);
-            //fullTimeTimerCB = new TimerCallback(timeOut);
             if (Rules.HasTimeLimit == true)
             {
-                // fullTimeTimer = new System.Threading.Timer(fullTimeTimerCB, null, 3000, -1);
                 secondsTimer = new System.Threading.Timer(secondsTimerCB, null, 1000, 1000);
             }
         }
@@ -51,7 +47,7 @@ namespace Balda
                 {
                     processPlayer(player, i++);
                     gameEnded = winCondition();
-
+                    gameEnded = true;
                     if (gameEnded)
                     {
                         break;
@@ -75,7 +71,10 @@ namespace Balda
                     result.Add(new KeyValuePair<int, Player>(i + 1, Players[i]));
                 }
             }
-            secondsTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            if (Rules.HasTimeLimit == true) 
+            {
+                secondsTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            }
             gamingForm.gameEnding();
         }
 
@@ -99,10 +98,6 @@ namespace Balda
             return true;
         }
 
-        /*void timeOut(object state)
-        {
-            timeIsUp = true;
-        }*/
         void timerTick(object state)
         {
             if (timeIsUp == false) 

@@ -79,5 +79,13 @@ namespace Balda
             this.Hide();
             g.Show();
         }
+
+        private void recordsButton_Click(object sender, EventArgs e)
+        {
+            RatingForm g = new RatingForm(users);
+            g.Owner = this;
+            this.Hide();
+            g.Show();
+        }
     }
 }
